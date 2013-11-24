@@ -119,7 +119,7 @@ namespace PlanViewer
                 {
                     ///current current user has been already registered as contractor
                 }
-                Response.Redirect("../CreatePlan.aspx");
+                Response.Redirect("../NewPlan.aspx");
             }
             else
             {
@@ -235,7 +235,7 @@ namespace PlanViewer
                  Membership.CreateUser(email, pas);
                  FormsAuthentication.SetAuthCookie(email, true);
                  Roles.AddUserToRole(email, Global.contractorRole);
-                 Response.Redirect("../createPlan.aspx");
+                 Response.Redirect("../NewPlan.aspx");
              }
              catch (Exception ex)
              {
@@ -246,15 +246,22 @@ namespace PlanViewer
          }
          public void sendEmail(string email, string subject, string text)
          {
-             SmtpClient Smtp = new SmtpClient("smtp.gmail.com", 25); //формируем письмо
-             Smtp.Credentials = new NetworkCredential("abiturhse", "hseguest");
-             Smtp.EnableSsl = true;
-             MailMessage Message = new MailMessage();
-             Message.From = new MailAddress("abiturhse@gmail.com");
-             Message.To.Add(new MailAddress(email));
-             Message.Subject = subject;
-             Message.Body = text;
-             Smtp.Send(Message); //отправляем письмо                  
+             try
+             {
+                 SmtpClient Smtp = new SmtpClient("smtp.gmail.com", 25); //формируем письмо
+                 Smtp.Credentials = new NetworkCredential("abiturhse", "hseguest");
+                 Smtp.EnableSsl = true;
+                 MailMessage Message = new MailMessage();
+                 Message.From = new MailAddress("abiturhse@gmail.com");
+                 Message.To.Add(new MailAddress(email));
+                 Message.Subject = subject;
+                 Message.Body = text;
+                 Smtp.Send(Message); //отправляем письмо                  
+             }
+             catch (Exception ex)
+             {
+                 System.Diagnostics.Debug.Print(ex.StackTrace);
+             }
          }
     }
 }

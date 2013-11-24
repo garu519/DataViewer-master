@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="TeamProjectDB" Class="DBClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=tn78yp8615.database.windows.net;Initial Catalog=TeamProjectDB;User ID=hjujgfg" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="TeamProjectDBConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Customer" Member="Customers">
+    <Type Name="Customer">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Info" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="Customer_Plan" Member="Plans" ThisKey="ID" OtherKey="Customer" Type="Plan" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Contractor" Member="Contractors">
+    <Type Name="Contractor">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Info" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="Contractor_Plan" Member="Plans" ThisKey="ID" OtherKey="Contractor" Type="Plan" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[Plan]" Member="Plans">
+    <Type Name="Plan">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Object" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="WorkType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="UnitName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CostName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Labor" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Materials" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Mechanisms" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Customer" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Contractor" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PlanID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Plan_Fact" Member="Facts" ThisKey="ID" OtherKey="ExtPlanID" Type="Fact" />
+      <Association Name="Contractor_Plan" Member="Contractor1" ThisKey="Contractor" OtherKey="ID" Type="Contractor" IsForeignKey="true" />
+      <Association Name="Customer_Plan" Member="Customer1" ThisKey="Customer" OtherKey="ID" Type="Customer" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Fact" Member="Facts">
+    <Type Name="Fact">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FactObject" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="WorkType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="UnitName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CostName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Labor" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Materials" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Mechanisms" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ExtPlanID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FactID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Status" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Plan_Fact" Member="Plan" ThisKey="ExtPlanID" OtherKey="ID" Type="Plan" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

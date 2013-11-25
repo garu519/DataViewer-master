@@ -151,6 +151,5 @@
         </asp:Panel>
     <asp:Panel runat="server" ID="Panel4">
         <asp:Button runat="server" ID="approve" Text="Одобрить" OnClick="approve_Click"/>
-        <asp:Button runat="server" ID="Cancel" Text="Отклонить" OnClick="Cancel_Click"/>
     </asp:Panel>
 </asp:Content>

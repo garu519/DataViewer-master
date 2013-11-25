@@ -140,7 +140,7 @@
                     <asp:LinkButton ID="lnkAdd" runat="server" CausesValidation="False" CommandName="Insert" Text="Insert"></asp:LinkButton> 
                 </FooterTemplate> 
                 <ItemTemplate> 
-                    <asp:LinkButton ID="lnkEdit" runat="server" CausesValidation="False" CommandName="Edit" Text="Edit"></asp:LinkButton> 
+                    <asp:LinkButton ID="lnkEdit" runat="server" CausesValidation="False" CommandName="Edit" Text="Edit" Visible="false"></asp:LinkButton> 
                 </ItemTemplate> 
             </asp:TemplateField>
         </Columns>

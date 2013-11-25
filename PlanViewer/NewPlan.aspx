@@ -116,7 +116,7 @@
                     <asp:LinkButton ID="lnkEdit" runat="server" CausesValidation="False" CommandName="Edit" Text="Edit"></asp:LinkButton> 
                 </ItemTemplate> 
             </asp:TemplateField>
-            <asp:CommandField ShowDeleteButton="true" />  
+            <asp:CommandField ShowDeleteButton="false" />  
         </Columns>
                 <EditRowStyle CssClass="GridViewEditRow" />
                 <FooterStyle CssClass="GridViewEditRow" />

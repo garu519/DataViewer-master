@@ -74,7 +74,7 @@ namespace PlanViewer
                 if (roles[0].Equals(Global.contractorRole))
                 {
                     planoption.InnerText = "Создать план";
-                    planoption.HRef = "CreatePlan.aspx";
+                    planoption.HRef = "NewPlan.aspx";
                     factlink.Visible = true;
                 }
                 else

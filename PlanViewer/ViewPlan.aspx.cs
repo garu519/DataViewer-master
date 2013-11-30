@@ -368,14 +368,18 @@ namespace PlanViewer
             ////System.IO.File.WriteAllText(@"E:\game\ExportedFile.xlsx", renderedGridView);
             //System.IO.File.WriteAllText(@""+Environment.CurrentDirectory + '/' + "Graph.xls", renderedGridView);
             gvbind();
-            string filename = "Graph.xls";
+            string filename = "Отчёт.xls";
             Response.ClearContent();
             Response.AddHeader("content-disposition", "attachment;filename=" + filename);
-            Response.ContentType = "application/vnd.ms-excel";
+            Response.ContentType = "application/excel";
             StringWriter sw = new StringWriter(); 
             HtmlTextWriter htm = new HtmlTextWriter(sw);
             GridView1.RenderControl(htm);
             Response.Write(sw.ToString());
+            StringWriter sw2 = new StringWriter();
+            HtmlTextWriter htm2 = new HtmlTextWriter(sw2);
+            GridView2.RenderControl(htm2);
+            Response.Write(sw2.ToString());
             Response.End();
         }
         public override void VerifyRenderingInServerForm(Control control)

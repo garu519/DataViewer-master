@@ -21,21 +21,8 @@
         </div>
     </asp:Panel>
     <div>
-        <asp:Panel ID="Panel2" runat ="server">
-            <%--<asp:Table ID="Table1" runat="server" Caption ="План" BackColor="LightGreen" BorderWidth="1px">
-                <asp:TableHeaderRow>
-                    <asp:TableHeaderCell Text="№  "></asp:TableHeaderCell>
-                    <asp:TableHeaderCell Text="Объект работ"></asp:TableHeaderCell>
-                    <asp:TableHeaderCell Text="Вид работ"></asp:TableHeaderCell>
-                    <asp:TableHeaderCell Text="Наименование единичной расценки"></asp:TableHeaderCell>
-                    <asp:TableHeaderCell Text="Единица измерения"></asp:TableHeaderCell>
-                    <asp:TableHeaderCell Text="Трудозатраты"></asp:TableHeaderCell>
-                    <asp:TableHeaderCell Text="Материалы"></asp:TableHeaderCell>
-                    <asp:TableHeaderCell Text="Механизмы"></asp:TableHeaderCell>
-                    <asp:TableHeaderCell Text="Статус"></asp:TableHeaderCell>
-                </asp:TableHeaderRow>
-            </asp:Table>--%>
-            <asp:GridView BackColor="LightBlue" GridLines="Both" BorderWidth="1px" Width="" Caption="План" ID="GridView2" runat="server" AutoGenerateColumns="false" DataKeyNames="ID"  ShowFooter="false">
+        <asp:Panel ID="Panel2" runat ="server">           
+            <asp:GridView BackColor="LightGreen" GridLines="Both" BorderWidth="1px" Width="" Caption="План" ID="GridView2" runat="server" AutoGenerateColumns="false" DataKeyNames="ID"  ShowFooter="false">
         <Columns>
             <asp:TemplateField HeaderText="№  " HeaderStyle-HorizontalAlign="Center">
                 <EditItemTemplate>

@@ -202,7 +202,7 @@ namespace PlanViewer
         protected void gvbind()
         {
             conn.Open();
-            SqlCommand cmdd = new SqlCommand("Select ID, Object, WorkType, UnitName, CostName, Labor, Materials, Mechanisms from Fact where PlanID=" + planID, conn);
+            SqlCommand cmdd = new SqlCommand("Select ID, Object, WorkType, UnitName, CostName, Labor, Materials, Mechanisms from Plan where PlanID=" + planID, conn);
             SqlDataAdapter dda = new SqlDataAdapter(cmdd);
             DataSet dds = new DataSet();
             dda.Fill(dds);

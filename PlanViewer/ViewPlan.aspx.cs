@@ -475,7 +475,8 @@ namespace PlanViewer
 
             // Write the rendered content to a file.
             string renderedGridView = sw.ToString();
-            System.IO.File.WriteAllText(@"E:\game\ExportedFile.xlsx", renderedGridView);
+            //System.IO.File.WriteAllText(@"E:\game\ExportedFile.xlsx", renderedGridView);
+            System.IO.File.WriteAllText(@""+Environment.CurrentDirectory + '/' + "Graph.xls", renderedGridView);
         }
         public override void VerifyRenderingInServerForm(Control control)
         {

@@ -13,6 +13,7 @@ using PlanViewer.Models;
 using System.Web.Configuration;
 using System.Data.SqlClient;
 using System.Web.Security;
+using System.IO;
 //using Excel = Microsoft.Office.Interop.Excel;
 namespace PlanViewer
 {
@@ -467,16 +468,25 @@ namespace PlanViewer
 
         protected void download_Click1(object sender, EventArgs e)
         {
-            System.IO.StringWriter sw = new System.IO.StringWriter();
-            System.Web.UI.HtmlTextWriter htw = new System.Web.UI.HtmlTextWriter(sw);
+            //System.IO.StringWriter sw = new System.IO.StringWriter();
+            //System.Web.UI.HtmlTextWriter htw = new System.Web.UI.HtmlTextWriter(sw);
 
-            // Render grid view control.
-            GridView1.RenderControl(htw);
+            //// Render grid view control.
+            //GridView1.RenderControl(htw);
 
-            // Write the rendered content to a file.
-            string renderedGridView = sw.ToString();
-            //System.IO.File.WriteAllText(@"E:\game\ExportedFile.xlsx", renderedGridView);
-            System.IO.File.WriteAllText(@""+Environment.CurrentDirectory + '/' + "Graph.xls", renderedGridView);
+            //// Write the rendered content to a file.
+            //string renderedGridView = sw.ToString();
+            ////System.IO.File.WriteAllText(@"E:\game\ExportedFile.xlsx", renderedGridView);
+            //System.IO.File.WriteAllText(@""+Environment.CurrentDirectory + '/' + "Graph.xls", renderedGridView);
+            string filename = "Graph.xls";
+            Response.ClearContent();
+            Response.AddHeader("content-disposition", "attachment;filename=" + filename);
+            Response.ContentType = "application/excel";
+            StringWriter sw = new StringWriter(); ;
+            HtmlTextWriter htm = new HtmlTextWriter(sw);
+            GridView1.RenderControl(htm);
+            Response.Write(sw.ToString());
+            Response.End();
         }
         public override void VerifyRenderingInServerForm(Control control)
         {

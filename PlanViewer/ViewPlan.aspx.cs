@@ -482,7 +482,7 @@ namespace PlanViewer
             string filename = "Graph.xls";
             Response.ClearContent();
             Response.AddHeader("content-disposition", "attachment;filename=" + filename);
-            Response.ContentType = "application/excel";
+            Response.ContentType = "application/vnd.ms-excel";
             StringWriter sw = new StringWriter(); 
             HtmlTextWriter htm = new HtmlTextWriter(sw);
             GridView1.RenderControl(htm);

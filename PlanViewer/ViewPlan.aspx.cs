@@ -338,7 +338,7 @@ namespace PlanViewer
             Response.Clear();
             Response.ClearContent();
             
-            Response.AddHeader("content-length", "attachment;filename=" + filename);
+            Response.AddHeader("content-disposition", "attachment;filename=" + filename);
             Response.Charset = "";
             Response.ContentType = "application/excel";
             StringWriter sw = new StringWriter(); 

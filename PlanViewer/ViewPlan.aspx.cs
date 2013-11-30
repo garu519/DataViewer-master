@@ -477,5 +477,9 @@ namespace PlanViewer
             string renderedGridView = sw.ToString();
             System.IO.File.WriteAllText(@"E:\game\ExportedFile.xlsx", renderedGridView);
         }
+        public override void VerifyRenderingInServerForm(Control control)
+        {
+            return;
+        }
     }
 }

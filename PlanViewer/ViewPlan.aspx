@@ -38,8 +38,8 @@
         </asp:Panel>
     </div>
         
-        <asp:Panel runat="server" ID="Panel3">
-            <asp:GridView BackColor="LightBlue" GridLines="Both" BorderWidth="1px" Width="" Caption="Факт" ID="GridView1" runat="server" AutoGenerateColumns="false" DataKeyNames="ID"  ShowFooter="false" >
+        <asp:Panel runat="server" ID="Panel3">    
+            <asp:GridView BackColor="LightBlue" GridLines="Both" BorderWidth="1px" Width="" Caption="Факт" ID="GridView1" runat="server" AutoGenerateColumns="false" DataKeyNames="ID"  ShowFooter="false">
         <Columns>
             <asp:TemplateField HeaderText="№  " HeaderStyle-HorizontalAlign="Center">
                 <EditItemTemplate>

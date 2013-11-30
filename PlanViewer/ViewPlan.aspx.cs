@@ -322,17 +322,7 @@ namespace PlanViewer
                     
 
         protected void download_Click1(object sender, EventArgs e)
-        {
-            //System.IO.StringWriter sw = new System.IO.StringWriter();
-            //System.Web.UI.HtmlTextWriter htw = new System.Web.UI.HtmlTextWriter(sw);
-
-            //// Render grid view control.
-            //GridView1.RenderControl(htw);
-
-            //// Write the rendered content to a file.
-            //string renderedGridView = sw.ToString();
-            ////System.IO.File.WriteAllText(@"E:\game\ExportedFile.xlsx", renderedGridView);
-            //System.IO.File.WriteAllText(@""+Environment.CurrentDirectory + '/' + "Graph.xls", renderedGridView);
+        {            
             gvbind();
             string filename = "Report.xls";
             Response.Clear();

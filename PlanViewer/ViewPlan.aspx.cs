@@ -319,41 +319,7 @@ namespace PlanViewer
              */
         }
 
-        protected void Button2_Click(object sender, EventArgs e)
-        {
-           /* var db = new DBClassesDataContext();
-            var query =
-                from plan in db.Plans
-               // where plan.ID == planindex
-                select plan;
-            query.ToArray()[0].Status = 2;
-            try
-            {
-                db.SubmitChanges();
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception.StackTrace);
-            }
-         //   viewPlan();
-            string email;
-            try
-            {
-              //  email = contr[0].Email;
-            }
-            catch (Exception)
-            {
-                email = "";
-            }
-            ClientScript.RegisterStartupScript(this.GetType(), "mailto",
-          //     "<script type = 'text/javascript'>parent.location='mailto:" + email +
-               "'</script>");
-            */
-        }
-
-        
-
-       
+                    
 
         protected void download_Click1(object sender, EventArgs e)
         {
@@ -368,9 +334,9 @@ namespace PlanViewer
             ////System.IO.File.WriteAllText(@"E:\game\ExportedFile.xlsx", renderedGridView);
             //System.IO.File.WriteAllText(@""+Environment.CurrentDirectory + '/' + "Graph.xls", renderedGridView);
             gvbind();
-            string filename = "Отчёт.xls";
+            string filename = "Report.xls";
             Response.ClearContent();
-            Response.AddHeader("content-disposition", "attachment;filename=" + filename);
+            Response.AddHeader("content-length", "attachment;filename=" + filename);
             Response.ContentType = "application/excel";
             StringWriter sw = new StringWriter(); 
             HtmlTextWriter htm = new HtmlTextWriter(sw);

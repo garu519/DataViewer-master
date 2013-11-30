@@ -62,15 +62,15 @@ namespace PlanViewer
             //DropDownList1.DataBind();
             try
             {
-                if (int.Parse(DropDownList1.SelectedValue) > 0)
-                    buildPlanTable();
+                //if (int.Parse(DropDownList1.SelectedValue) > 0)
+                    //buildPlanTable();
             }
             catch
             {
             }
             if (!Page.IsPostBack)
             {
-                gvbind();
+                //gvbind();
             }
         }
         [WebMethod(EnableSession = true)]
@@ -124,7 +124,7 @@ namespace PlanViewer
 
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            buildPlanTable();
+            //buildPlanTable();
             GridView1.EditIndex = -1;
             gvbind();
         }
@@ -144,63 +144,74 @@ namespace PlanViewer
             }
         }
         
-        private void buildPlanTable()
-        {
-            for (int i = 1; i < Table1.Rows.Count; i++)
-            {
-                Table1.Rows.RemoveAt(i);
-            }
-            var db = new DBClassesDataContext();
-            var query =
-                from plan in db.Plans
-                where plan.PlanID == int.Parse(DropDownList1.SelectedValue)
-                select plan;
-            Plan[] results = query.ToArray<Plan>();
+        //private void buildPlanTable()
+        //{
+        //    for (int i = 1; i < Table1.Rows.Count; i++)
+        //    {
+        //        Table1.Rows.RemoveAt(i);
+        //    }
+        //    var db = new DBClassesDataContext();
+        //    var query =
+        //        from plan in db.Plans
+        //        where plan.PlanID == int.Parse(DropDownList1.SelectedValue)
+        //        select plan;
+        //    Plan[] results = query.ToArray<Plan>();
             
-            foreach (Plan item in results)
-            {
+        //    foreach (Plan item in results)
+        //    {
 
-                TableRow tr = new TableRow();
-                List<TableCell> cells = new List<TableCell>();
-                TableCell c = new TableCell();
-                c.Text = item.ID + "";
-                cells.Add(c);
-                c = new TableCell();
-                c.Text = item.Object;
-                cells.Add(c);
-                c = new TableCell();
-                c.Text = item.WorkType;
-                cells.Add(c);
-                c = new TableCell();
-                c.Text = item.CostName;
-                cells.Add(c);
-                c = new TableCell();
-                c.Text = item.UnitName;
-                cells.Add(c);
-                c = new TableCell();
-                c.Text = item.Labor;
-                cells.Add(c);
-                c = new TableCell();
-                c.Text = item.Materials;
-                cells.Add(c);
-                c = new TableCell();
-                c.Text = item.Mechanisms;
-                cells.Add(c);
-                c = new TableCell();
-                c.Text = item.Status + "";
-                //c.Enabled = true;
-                cells.Add(c);
-                foreach (TableCell cell in cells)
-                {
-                    tr.Cells.Add(cell);
-                }
-                Table1.Rows.Add(tr);
-                planID = int.Parse(DropDownList1.SelectedValue);
-            }
-        }
+        //        TableRow tr = new TableRow();
+        //        List<TableCell> cells = new List<TableCell>();
+        //        TableCell c = new TableCell();
+        //        c.Text = item.ID + "";
+        //        cells.Add(c);
+        //        c = new TableCell();
+        //        c.Text = item.Object;
+        //        cells.Add(c);
+        //        c = new TableCell();
+        //        c.Text = item.WorkType;
+        //        cells.Add(c);
+        //        c = new TableCell();
+        //        c.Text = item.CostName;
+        //        cells.Add(c);
+        //        c = new TableCell();
+        //        c.Text = item.UnitName;
+        //        cells.Add(c);
+        //        c = new TableCell();
+        //        c.Text = item.Labor;
+        //        cells.Add(c);
+        //        c = new TableCell();
+        //        c.Text = item.Materials;
+        //        cells.Add(c);
+        //        c = new TableCell();
+        //        c.Text = item.Mechanisms;
+        //        cells.Add(c);
+        //        c = new TableCell();
+        //        c.Text = item.Status + "";
+        //        //c.Enabled = true;
+        //        cells.Add(c);
+        //        foreach (TableCell cell in cells)
+        //        {
+        //            tr.Cells.Add(cell);
+        //        }
+        //        Table1.Rows.Add(tr);
+        //        planID = int.Parse(DropDownList1.SelectedValue);
+        //    }
+        //}
 
         protected void gvbind()
         {
+            conn.Open();
+            SqlCommand cmdd = new SqlCommand("Select ID, Object, WorkType, UnitName, CostName, Labor, Materials, Mechanisms from Fact where PlanID=" + planID, conn);
+            SqlDataAdapter dda = new SqlDataAdapter(cmdd);
+            DataSet dds = new DataSet();
+            dda.Fill(dds);
+            conn.Close();
+            if (dds.Tables[0].Rows.Count > 0)
+            {
+                GridView2.DataSource = dds;
+                GridView2.DataBind();
+            }
             conn.Open();
             SqlCommand cmd = new SqlCommand("Select ID, FactObject, WorkType, UnitName, CostName, Labor, Materials, Mechanisms from Fact where FactID=" + planID, conn);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -214,7 +225,7 @@ namespace PlanViewer
             }
             else
             {
-                if (Table1.Rows.Count > 1)
+                if (planID > 0)
                 {
                     var db = new DBClassesDataContext();
                     var query =
@@ -340,131 +351,9 @@ namespace PlanViewer
             */
         }
 
-        private void releaseObject(object obj)//особождаем объект
-        {
-            try
-            {
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
-                obj = null;
-            }
-            catch (Exception)
-            {
-                obj = null;
-                //MessageBox.Show("Произошла критическая ошибка!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            finally
-            {
-                GC.Collect();
-            }
-        }
+        
 
-        //protected void download_Click(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-
-        //        //создаем лист Excel 
-        //        Excel.Application xlApp;
-        //        Excel.Workbook xlWorkBook;
-        //        Excel.Worksheet xlWorkSheet;
-        //        object misValue = System.Reflection.Missing.Value;
-        //        Excel.Range chartRange; //диапазон ячеек
-
-        //        xlApp = new Excel.Application();
-        //        xlWorkBook = xlApp.Workbooks.Add(misValue);
-        //        xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
-        //        xlWorkSheet.get_Range("A1", "B2").Merge(false);
-        //        //форматируем заголовок файла
-        //        chartRange = xlWorkSheet.get_Range("A1", "B2");
-        //        chartRange.Font.Bold = true;
-        //        chartRange.Font.Size = 18;
-        //        chartRange.FormulaR1C1 = "Нижняя огибающая";
-        //        chartRange.VerticalAlignment = Excel.XlVAlign.xlVAlignCenter;
-        //        chartRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
-        //        chartRange.AutoFormat(Excel.XlRangeAutoFormat.xlRangeAutoFormat3DEffects1,
-        //        true, false, true, false, true, true);
-
-
-        //        xlWorkSheet.Columns.Font.Size = 14;
-        //        //формируем название колонок
-        //        xlWorkSheet.Cells[3, 1] = "Вероятность";
-        //        xlWorkSheet.Cells[3, 2] = "Нижняя огибающая";
-
-        //        chartRange = xlWorkSheet.get_Range("A3", "B3");
-        //        //выравниваем по ширине текста
-        //        chartRange.EntireColumn.AutoFit();
-        //        chartRange.Font.Bold = true;
-        //        xlApp.DisplayAlerts = false;
-        //        xlApp.DisplayAlerts = false;
-        //        var db = new DBClassesDataContext();
-        //        var query =
-        //        from plan in db.Plans
-        //        where plan.PlanID==planID
-        //        select plan;
-        //        Plan[] plans = query.ToArray();
-
-
-        //        double prob = 0.001;
-        //        for (int i = 0; i < plans.Length; i++)
-        //        {
-        //            xlWorkSheet.Columns.Font.Bold = true;
-        //            xlWorkSheet.Cells[i + 4, 1] = prob;
-        //            xlWorkSheet.Cells[i + 4, 2] = plans[i].Object+"";
-        //            xlWorkSheet.Cells[i + 4, 3] = plans[i].WorkType + "";
-        //            xlWorkSheet.Cells[i + 4, 4] = plans[i].UnitName + "";
-        //            xlWorkSheet.Cells[i + 4, 5] = plans[i].CostName + "";
-        //            xlWorkSheet.Cells[i + 4, 6] = plans[i].Labor + "";
-        //            xlWorkSheet.Cells[i + 4, 7] = plans[i].Materials + "";
-        //            xlWorkSheet.Cells[i + 4, 8] = plans[i].Mechanisms + "";
-        //            prob += 0.001;
-        //            xlWorkSheet.Columns.Font.Bold = false;
-        //        }
-
-        //        int j = plans.Length;
-
-
-        //        //форматируем ячейки таблицы
-        //        chartRange = xlWorkSheet.get_Range("A4", "B" + (j + 3));
-        //        //chartRange.EntireColumn.AutoFit();
-        //        chartRange = xlWorkSheet.get_Range("A1", "B" + (j + 3));
-        //        chartRange.EntireColumn.AutoFit();
-        //        //рисуем границы
-        //        chartRange.BorderAround(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlMedium, Excel.XlColorIndex.xlColorIndexAutomatic, Excel.XlColorIndex.xlColorIndexAutomatic);
-        //        chartRange = xlWorkSheet.get_Range("a3", "b3");
-        //        chartRange.BorderAround(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlMedium, Excel.XlColorIndex.xlColorIndexAutomatic, Excel.XlColorIndex.xlColorIndexAutomatic);
-        //        //chartRange = xlWorkSheet.get_Range("b5", "e" + (budget + 4));
-        //        //chartRange.Font.Bold = true;
-        //        //chartRange = xlWorkSheet.get_Range("b" + (GetPos + 4), "e" + (GetPos + 4));
-        //        //chartRange.Font.Bold = true;
-        //        //сохраняем файл
-
-        //        chartRange = xlWorkSheet.get_Range("A1", "B2");
-        //        chartRange.ColumnWidth = 30;
-
-        //        Excel.ChartObjects xlCharts = (Excel.ChartObjects)xlWorkSheet.ChartObjects(Type.Missing);
-        //        Excel.ChartObject myChart = (Excel.ChartObject)xlCharts.Add(400, 70, 500, 300);
-        //        Excel.Chart chartPage = myChart.Chart;
-
-        //        chartRange = xlWorkSheet.get_Range("b3", "B" + (j + 3));
-        //        chartPage.SetSourceData(chartRange, misValue);
-        //        chartPage.ChartType = Excel.XlChartType.xlLine;
-
-        //        xlWorkBook.SaveAs(Environment.CurrentDirectory + '/' + "Graph.xls", Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
-        //        xlWorkBook.Close(true, misValue, misValue);
-        //        xlApp.DisplayAlerts = false;
-        //        xlApp.Quit();
-        //        //очищяем объекты
-        //        releaseObject(xlWorkSheet);
-        //        releaseObject(xlWorkBook);
-        //        releaseObject(xlApp);
-
-        //        System.Diagnostics.Process.Start(Environment.CurrentDirectory + '/' + "Graph.xls");
-        //    }
-        //    catch (Exception)
-        //    {
-        //        //MessageBox.Show("Произошла критическая ошибка!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //    }
-        //}
+       
 
         protected void download_Click1(object sender, EventArgs e)
         {
@@ -492,6 +381,12 @@ namespace PlanViewer
         public override void VerifyRenderingInServerForm(Control control)
         {
             
+        }
+
+        protected void DropDownList1_DataBound(object sender, EventArgs e)
+        {
+            planID = int.Parse(DropDownList1.SelectedValue);
+            gvbind();
         }
     }
 }

@@ -13,7 +13,7 @@ using PlanViewer.Models;
 using System.Web.Configuration;
 using System.Data.SqlClient;
 using System.Web.Security;
-using Excel = Microsoft.Office.Interop.Excel;
+//using Excel = Microsoft.Office.Interop.Excel;
 namespace PlanViewer
 {
     public partial class ViewPlan : System.Web.UI.Page
@@ -357,113 +357,113 @@ namespace PlanViewer
             }
         }
 
-        protected void download_Click(object sender, EventArgs e)
-        {
-            try
-            {
+        //protected void download_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
 
-                //создаем лист Excel 
-                Excel.Application xlApp;
-                Excel.Workbook xlWorkBook;
-                Excel.Worksheet xlWorkSheet;
-                object misValue = System.Reflection.Missing.Value;
-                Excel.Range chartRange; //диапазон ячеек
+        //        //создаем лист Excel 
+        //        Excel.Application xlApp;
+        //        Excel.Workbook xlWorkBook;
+        //        Excel.Worksheet xlWorkSheet;
+        //        object misValue = System.Reflection.Missing.Value;
+        //        Excel.Range chartRange; //диапазон ячеек
 
-                xlApp = new Excel.Application();
-                xlWorkBook = xlApp.Workbooks.Add(misValue);
-                xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
-                xlWorkSheet.get_Range("A1", "B2").Merge(false);
-                //форматируем заголовок файла
-                chartRange = xlWorkSheet.get_Range("A1", "B2");
-                chartRange.Font.Bold = true;
-                chartRange.Font.Size = 18;
-                chartRange.FormulaR1C1 = "Нижняя огибающая";
-                chartRange.VerticalAlignment = Excel.XlVAlign.xlVAlignCenter;
-                chartRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
-                chartRange.AutoFormat(Excel.XlRangeAutoFormat.xlRangeAutoFormat3DEffects1,
-                true, false, true, false, true, true);
-
-
-                xlWorkSheet.Columns.Font.Size = 14;
-                //формируем название колонок
-                xlWorkSheet.Cells[3, 1] = "Вероятность";
-                xlWorkSheet.Cells[3, 2] = "Нижняя огибающая";
-
-                chartRange = xlWorkSheet.get_Range("A3", "B3");
-                //выравниваем по ширине текста
-                chartRange.EntireColumn.AutoFit();
-                chartRange.Font.Bold = true;
-                xlApp.DisplayAlerts = false;
-                xlApp.DisplayAlerts = false;
-                var db = new DBClassesDataContext();
-                var query =
-                from plan in db.Plans
-                where plan.PlanID==planID
-                select plan;
-                Plan[] plans = query.ToArray();
+        //        xlApp = new Excel.Application();
+        //        xlWorkBook = xlApp.Workbooks.Add(misValue);
+        //        xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
+        //        xlWorkSheet.get_Range("A1", "B2").Merge(false);
+        //        //форматируем заголовок файла
+        //        chartRange = xlWorkSheet.get_Range("A1", "B2");
+        //        chartRange.Font.Bold = true;
+        //        chartRange.Font.Size = 18;
+        //        chartRange.FormulaR1C1 = "Нижняя огибающая";
+        //        chartRange.VerticalAlignment = Excel.XlVAlign.xlVAlignCenter;
+        //        chartRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+        //        chartRange.AutoFormat(Excel.XlRangeAutoFormat.xlRangeAutoFormat3DEffects1,
+        //        true, false, true, false, true, true);
 
 
-                double prob = 0.001;
-                for (int i = 0; i < plans.Length; i++)
-                {
-                    xlWorkSheet.Columns.Font.Bold = true;
-                    xlWorkSheet.Cells[i + 4, 1] = prob;
-                    xlWorkSheet.Cells[i + 4, 2] = plans[i].Object+"";
-                    xlWorkSheet.Cells[i + 4, 3] = plans[i].WorkType + "";
-                    xlWorkSheet.Cells[i + 4, 4] = plans[i].UnitName + "";
-                    xlWorkSheet.Cells[i + 4, 5] = plans[i].CostName + "";
-                    xlWorkSheet.Cells[i + 4, 6] = plans[i].Labor + "";
-                    xlWorkSheet.Cells[i + 4, 7] = plans[i].Materials + "";
-                    xlWorkSheet.Cells[i + 4, 8] = plans[i].Mechanisms + "";
-                    prob += 0.001;
-                    xlWorkSheet.Columns.Font.Bold = false;
-                }
+        //        xlWorkSheet.Columns.Font.Size = 14;
+        //        //формируем название колонок
+        //        xlWorkSheet.Cells[3, 1] = "Вероятность";
+        //        xlWorkSheet.Cells[3, 2] = "Нижняя огибающая";
 
-                int j = plans.Length;
+        //        chartRange = xlWorkSheet.get_Range("A3", "B3");
+        //        //выравниваем по ширине текста
+        //        chartRange.EntireColumn.AutoFit();
+        //        chartRange.Font.Bold = true;
+        //        xlApp.DisplayAlerts = false;
+        //        xlApp.DisplayAlerts = false;
+        //        var db = new DBClassesDataContext();
+        //        var query =
+        //        from plan in db.Plans
+        //        where plan.PlanID==planID
+        //        select plan;
+        //        Plan[] plans = query.ToArray();
 
 
-                //форматируем ячейки таблицы
-                chartRange = xlWorkSheet.get_Range("A4", "B" + (j + 3));
-                //chartRange.EntireColumn.AutoFit();
-                chartRange = xlWorkSheet.get_Range("A1", "B" + (j + 3));
-                chartRange.EntireColumn.AutoFit();
-                //рисуем границы
-                chartRange.BorderAround(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlMedium, Excel.XlColorIndex.xlColorIndexAutomatic, Excel.XlColorIndex.xlColorIndexAutomatic);
-                chartRange = xlWorkSheet.get_Range("a3", "b3");
-                chartRange.BorderAround(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlMedium, Excel.XlColorIndex.xlColorIndexAutomatic, Excel.XlColorIndex.xlColorIndexAutomatic);
-                //chartRange = xlWorkSheet.get_Range("b5", "e" + (budget + 4));
-                //chartRange.Font.Bold = true;
-                //chartRange = xlWorkSheet.get_Range("b" + (GetPos + 4), "e" + (GetPos + 4));
-                //chartRange.Font.Bold = true;
-                //сохраняем файл
+        //        double prob = 0.001;
+        //        for (int i = 0; i < plans.Length; i++)
+        //        {
+        //            xlWorkSheet.Columns.Font.Bold = true;
+        //            xlWorkSheet.Cells[i + 4, 1] = prob;
+        //            xlWorkSheet.Cells[i + 4, 2] = plans[i].Object+"";
+        //            xlWorkSheet.Cells[i + 4, 3] = plans[i].WorkType + "";
+        //            xlWorkSheet.Cells[i + 4, 4] = plans[i].UnitName + "";
+        //            xlWorkSheet.Cells[i + 4, 5] = plans[i].CostName + "";
+        //            xlWorkSheet.Cells[i + 4, 6] = plans[i].Labor + "";
+        //            xlWorkSheet.Cells[i + 4, 7] = plans[i].Materials + "";
+        //            xlWorkSheet.Cells[i + 4, 8] = plans[i].Mechanisms + "";
+        //            prob += 0.001;
+        //            xlWorkSheet.Columns.Font.Bold = false;
+        //        }
 
-                chartRange = xlWorkSheet.get_Range("A1", "B2");
-                chartRange.ColumnWidth = 30;
+        //        int j = plans.Length;
 
-                Excel.ChartObjects xlCharts = (Excel.ChartObjects)xlWorkSheet.ChartObjects(Type.Missing);
-                Excel.ChartObject myChart = (Excel.ChartObject)xlCharts.Add(400, 70, 500, 300);
-                Excel.Chart chartPage = myChart.Chart;
 
-                chartRange = xlWorkSheet.get_Range("b3", "B" + (j + 3));
-                chartPage.SetSourceData(chartRange, misValue);
-                chartPage.ChartType = Excel.XlChartType.xlLine;
+        //        //форматируем ячейки таблицы
+        //        chartRange = xlWorkSheet.get_Range("A4", "B" + (j + 3));
+        //        //chartRange.EntireColumn.AutoFit();
+        //        chartRange = xlWorkSheet.get_Range("A1", "B" + (j + 3));
+        //        chartRange.EntireColumn.AutoFit();
+        //        //рисуем границы
+        //        chartRange.BorderAround(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlMedium, Excel.XlColorIndex.xlColorIndexAutomatic, Excel.XlColorIndex.xlColorIndexAutomatic);
+        //        chartRange = xlWorkSheet.get_Range("a3", "b3");
+        //        chartRange.BorderAround(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlMedium, Excel.XlColorIndex.xlColorIndexAutomatic, Excel.XlColorIndex.xlColorIndexAutomatic);
+        //        //chartRange = xlWorkSheet.get_Range("b5", "e" + (budget + 4));
+        //        //chartRange.Font.Bold = true;
+        //        //chartRange = xlWorkSheet.get_Range("b" + (GetPos + 4), "e" + (GetPos + 4));
+        //        //chartRange.Font.Bold = true;
+        //        //сохраняем файл
 
-                xlWorkBook.SaveAs(Environment.CurrentDirectory + '/' + "Graph.xls", Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
-                xlWorkBook.Close(true, misValue, misValue);
-                xlApp.DisplayAlerts = false;
-                xlApp.Quit();
-                //очищяем объекты
-                releaseObject(xlWorkSheet);
-                releaseObject(xlWorkBook);
-                releaseObject(xlApp);
+        //        chartRange = xlWorkSheet.get_Range("A1", "B2");
+        //        chartRange.ColumnWidth = 30;
 
-                System.Diagnostics.Process.Start(Environment.CurrentDirectory + '/' + "Graph.xls");
-            }
-            catch (Exception)
-            {
-                //MessageBox.Show("Произошла критическая ошибка!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
+        //        Excel.ChartObjects xlCharts = (Excel.ChartObjects)xlWorkSheet.ChartObjects(Type.Missing);
+        //        Excel.ChartObject myChart = (Excel.ChartObject)xlCharts.Add(400, 70, 500, 300);
+        //        Excel.Chart chartPage = myChart.Chart;
+
+        //        chartRange = xlWorkSheet.get_Range("b3", "B" + (j + 3));
+        //        chartPage.SetSourceData(chartRange, misValue);
+        //        chartPage.ChartType = Excel.XlChartType.xlLine;
+
+        //        xlWorkBook.SaveAs(Environment.CurrentDirectory + '/' + "Graph.xls", Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+        //        xlWorkBook.Close(true, misValue, misValue);
+        //        xlApp.DisplayAlerts = false;
+        //        xlApp.Quit();
+        //        //очищяем объекты
+        //        releaseObject(xlWorkSheet);
+        //        releaseObject(xlWorkBook);
+        //        releaseObject(xlApp);
+
+        //        System.Diagnostics.Process.Start(Environment.CurrentDirectory + '/' + "Graph.xls");
+        //    }
+        //    catch (Exception)
+        //    {
+        //        //MessageBox.Show("Произошла критическая ошибка!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //    }
+        //}
 
         protected void download_Click1(object sender, EventArgs e)
         {

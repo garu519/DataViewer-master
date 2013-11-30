@@ -69,7 +69,7 @@ namespace PlanViewer
                     SqlCommand cmd = new SqlCommand("update [Plan] set PlanID=" + planID + ", Status=" + 0 + " where Status=0", conn);
                     cmd.ExecuteNonQuery();
                     conn.Close();
-                    gvbind();
+                    //  gvbind();
                     //GridView1.EditIndex = 0;
                 }
                 catch (Exception ex)

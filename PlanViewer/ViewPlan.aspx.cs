@@ -335,8 +335,11 @@ namespace PlanViewer
             //System.IO.File.WriteAllText(@""+Environment.CurrentDirectory + '/' + "Graph.xls", renderedGridView);
             gvbind();
             string filename = "Report.xls";
+            Response.Clear();
             Response.ClearContent();
+            
             Response.AddHeader("content-length", "attachment;filename=" + filename);
+            Response.Charset = "";
             Response.ContentType = "application/excel";
             StringWriter sw = new StringWriter(); 
             HtmlTextWriter htm = new HtmlTextWriter(sw);

@@ -151,5 +151,6 @@
         </asp:Panel>
     <asp:Panel runat="server" ID="Panel4">
         <asp:Button runat="server" ID="approve" Text="Одобрить" OnClick="approve_Click"/>
+        <asp:Button runat="server" ID="download" Text="Скачать отчет" OnClick="download_Click1" />
     </asp:Panel>
 </asp:Content>

@@ -233,6 +233,12 @@
         </asp:Panel>
     <asp:Panel runat="server" ID="Panel4">
         <asp:Button runat="server" ID="approve" Text="Одобрить" OnClick="approve_Click"/>
-        <asp:Button runat="server" ID="download" Text="Скачать отчет" OnClick="download_Click1" />
+        <asp:Button runat="server" ID="download" Text="Скачать отчет" OnClick="download_Click1" />        
+    </asp:Panel>
+    <asp:Panel runat="server" ID="Panel5" HorizontalAlign="Center">
+        <asp:TextBox ID="Subject" runat="server" TextMode="SingleLine" ToolTip="Тема письма" ></asp:TextBox>
+        <br />
+        <asp:TextBox ID="MessageText" runat="server" TextMode="MultiLine" ToolTip="Текст запроса подрядчику" ></asp:TextBox>
+        <asp:Button runat="server" ID="sendRequest" Text="Отправить запрос" OnClick="sendRequest_Click" />
     </asp:Panel>
 </asp:Content>

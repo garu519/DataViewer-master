@@ -351,5 +351,31 @@ namespace PlanViewer
             planID = int.Parse(DropDownList1.SelectedValue);
             gvbind();
         }
+
+        protected void sendRequest_Click(object sender, EventArgs e)
+        {
+            {
+                //try
+                //{
+                    SmtpClient Smtp = new SmtpClient("smtp.gmail.com", 587); //формируем письмо
+                    Smtp.UseDefaultCredentials = false;
+                    Smtp.Credentials = new NetworkCredential("abiturhse@gmail.com", "hseguest");
+                    
+                    
+                    Smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    Smtp.EnableSsl = true;
+                    MailMessage Message = new MailMessage();
+                    Message.From = new MailAddress("abiturhse@gmail.com");
+                    Message.To.Add(new MailAddress("12_123@mail.ru"));
+                    Message.Subject = Subject.Text;
+                    Message.Body = MessageText.Text;
+                    Smtp.Send(Message); //отправляем письмо                  
+                //}
+                //catch (Exception ex)
+                //{
+                //    System.Diagnostics.Debug.Print(ex.StackTrace);
+                //}
+            }
+        }
     }
 }

@@ -124,9 +124,9 @@ namespace PlanViewer
 
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //buildPlanTable();
-            GridView1.EditIndex = -1;
-            gvbind();
+            buildPlanTable();
+            //GridView1.EditIndex = -1;
+            //gvbind();
         }
 
         [WebMethod(EnableSession = true)]
@@ -143,63 +143,115 @@ namespace PlanViewer
                 return new { Result = "ERROR", Message = ex.Message };
             }
         }
-        
-        //private void buildPlanTable()
-        //{
-        //    for (int i = 1; i < Table1.Rows.Count; i++)
-        //    {
-        //        Table1.Rows.RemoveAt(i);
-        //    }
-        //    var db = new DBClassesDataContext();
-        //    var query =
-        //        from plan in db.Plans
-        //        where plan.PlanID == int.Parse(DropDownList1.SelectedValue)
-        //        select plan;
-        //    Plan[] results = query.ToArray<Plan>();
-            
-        //    foreach (Plan item in results)
-        //    {
 
-        //        TableRow tr = new TableRow();
-        //        List<TableCell> cells = new List<TableCell>();
-        //        TableCell c = new TableCell();
-        //        c.Text = item.ID + "";
-        //        cells.Add(c);
-        //        c = new TableCell();
-        //        c.Text = item.Object;
-        //        cells.Add(c);
-        //        c = new TableCell();
-        //        c.Text = item.WorkType;
-        //        cells.Add(c);
-        //        c = new TableCell();
-        //        c.Text = item.CostName;
-        //        cells.Add(c);
-        //        c = new TableCell();
-        //        c.Text = item.UnitName;
-        //        cells.Add(c);
-        //        c = new TableCell();
-        //        c.Text = item.Labor;
-        //        cells.Add(c);
-        //        c = new TableCell();
-        //        c.Text = item.Materials;
-        //        cells.Add(c);
-        //        c = new TableCell();
-        //        c.Text = item.Mechanisms;
-        //        cells.Add(c);
-        //        c = new TableCell();
-        //        c.Text = item.Status + "";
-        //        //c.Enabled = true;
-        //        cells.Add(c);
-        //        foreach (TableCell cell in cells)
-        //        {
-        //            tr.Cells.Add(cell);
-        //        }
-        //        Table1.Rows.Add(tr);
-        //        planID = int.Parse(DropDownList1.SelectedValue);
-        //    }
-        //}
+        private void buildPlanTable()
+        {
+            for (int i = 1; i < Table1.Rows.Count; i++)
+            {
+                Table1.Rows.RemoveAt(i);
+            }
+            var db = new DBClassesDataContext();
+            var query =
+                from plan in db.Plans
+                where plan.PlanID == int.Parse(DropDownList1.SelectedValue)
+                select plan;
+            Plan[] results = query.ToArray<Plan>();
 
-        protected void gvbind()
+            foreach (Plan item in results)
+            {
+                var fact_query =
+                    from fact in db.Facts
+                    where fact.ExtPlanID == item.ID
+                    select fact;
+                Fact facts = fact_query.First<Fact>();
+                TableRow tr = new TableRow();
+                List<TableCell> cells = new List<TableCell>();
+                TableCell c = new TableCell();
+                c.Text = item.ID + "";
+                c.BorderStyle = BorderStyle.Solid;
+                c.BorderWidth = 1;
+                c.BorderColor = System.Drawing.Color.Black;
+                cells.Add(c);
+                c = new TableCell();
+                c.Text = item.Object;
+                c.BorderStyle = BorderStyle.Solid;
+                c.BorderWidth = 1;
+                c.BorderColor = System.Drawing.Color.Black;
+                cells.Add(c);
+                c = new TableCell();
+                c.Text = item.WorkType;
+                c.BorderStyle = BorderStyle.Solid;
+                c.BorderWidth = 1;
+                c.BorderColor = System.Drawing.Color.Black;
+                cells.Add(c);
+                c = new TableCell();
+                c.Text = item.CostName;
+                c.BorderStyle = BorderStyle.Solid;
+                c.BorderWidth = 1;
+                c.BorderColor = System.Drawing.Color.Black;
+                cells.Add(c);
+                c = new TableCell();
+                c.Text = item.UnitName;
+                c.BorderStyle = BorderStyle.Solid;
+                c.BorderWidth = 1;
+                c.BorderColor = System.Drawing.Color.Black;
+                cells.Add(c);
+                c = new TableCell();
+                c.Text = item.Labor;
+                c.BorderStyle = BorderStyle.Solid;
+                c.BorderWidth = 1;
+                c.BorderColor = System.Drawing.Color.Black;
+                cells.Add(c);
+                c = new TableCell();
+                c.Text = facts.Labor;
+                c.BorderStyle = BorderStyle.Solid;
+                c.BorderWidth = 1;
+                c.BorderColor = System.Drawing.Color.Black;
+                c.BackColor = System.Drawing.Color.PowderBlue;
+                cells.Add(c);
+                c = new TableCell();
+                c.Text = item.Materials;
+                c.BorderStyle = BorderStyle.Solid;
+                c.BorderWidth = 1;
+                c.BorderColor = System.Drawing.Color.Black;
+                cells.Add(c);
+                c = new TableCell();
+                c.Text = facts.Materials;
+                c.BackColor = System.Drawing.Color.PowderBlue;
+                c.BorderStyle = BorderStyle.Solid;
+                c.BorderWidth = 1;
+                c.BorderColor = System.Drawing.Color.Black;
+                cells.Add(c);
+                c = new TableCell();
+                c.Text = item.Mechanisms;
+                c.BorderStyle = BorderStyle.Solid;
+                c.BorderWidth = 1;
+                c.BorderColor = System.Drawing.Color.Black;
+                cells.Add(c);
+                c = new TableCell();
+                c.Text = facts.Mechanisms;
+                c.BackColor = System.Drawing.Color.PowderBlue;
+                c.BorderStyle = BorderStyle.Solid;
+                c.BorderWidth = 1;
+                c.BorderColor = System.Drawing.Color.Black;
+                cells.Add(c);
+                c = new TableCell();
+                c.Text = item.Status + "";
+                c.BorderStyle = BorderStyle.Solid;
+                c.BorderWidth = 1;
+                c.BorderColor = System.Drawing.Color.Black;
+                //c.Enabled = true;
+                cells.Add(c);
+                foreach (TableCell cell in cells)
+                {
+                    tr.Cells.Add(cell);
+                }
+                Table1.Rows.Add(tr);
+                planID = int.Parse(DropDownList1.SelectedValue);
+            }
+        }
+
+        /*protected void gvbind()
         {
             conn.Open();
             SqlCommand cmdd = new SqlCommand("Select ID, Object, WorkType, UnitName, CostName, Labor, Materials, Mechanisms from [Plan] where PlanID=" + planID, conn);
@@ -272,7 +324,7 @@ namespace PlanViewer
                     }
                 }
             }
-        }
+        }*/
 
         
         protected void PlansDataSource_Selecting(object sender, SqlDataSourceSelectingEventArgs e)
@@ -323,7 +375,8 @@ namespace PlanViewer
 
         protected void download_Click1(object sender, EventArgs e)
         {            
-            gvbind();
+            
+            //gvbind();
             string filename = "Report.xls";
             Response.Clear();
             Response.ClearContent();
@@ -333,11 +386,11 @@ namespace PlanViewer
             Response.ContentType = "application/excel";
             StringWriter sw = new StringWriter(); 
             HtmlTextWriter htm = new HtmlTextWriter(sw);
-            GridView1.RenderControl(htm);
+            Table1.RenderControl(htm);
             Response.Write(sw.ToString());
             StringWriter sw2 = new StringWriter();
             HtmlTextWriter htm2 = new HtmlTextWriter(sw2);
-            GridView2.RenderControl(htm2);
+            Table1.RenderControl(htm2);
             Response.Write(sw2.ToString());
             Response.End();
         }
@@ -349,7 +402,8 @@ namespace PlanViewer
         protected void DropDownList1_DataBound(object sender, EventArgs e)
         {
             planID = int.Parse(DropDownList1.SelectedValue);
-            gvbind();
+            //gvbind();
+            buildPlanTable();
         }
 
         protected void sendRequest_Click(object sender, EventArgs e)

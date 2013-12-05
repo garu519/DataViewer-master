@@ -384,10 +384,10 @@ namespace PlanViewer
             Response.AddHeader("content-disposition", "attachment;filename=" + filename);
             Response.Charset = "";
             Response.ContentType = "application/excel";
-            StringWriter sw = new StringWriter(); 
-            HtmlTextWriter htm = new HtmlTextWriter(sw);
-            Table1.RenderControl(htm);
-            Response.Write(sw.ToString());
+            //StringWriter sw = new StringWriter(); 
+            //HtmlTextWriter htm = new HtmlTextWriter(sw);
+            //Table1.RenderControl(htm);
+            //Response.Write(sw.ToString());
             StringWriter sw2 = new StringWriter();
             HtmlTextWriter htm2 = new HtmlTextWriter(sw2);
             Table1.RenderControl(htm2);

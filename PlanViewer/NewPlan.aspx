@@ -10,7 +10,19 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
     <asp:DropDownList ID="DropDownList1" runat="server" DataSourceID="SqlDataSource1" DataTextField="Name" DataValueField="ID">
     </asp:DropDownList>
-    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:TeamProjectDBConnectionString1 %>" SelectCommand="SELECT [Name], [ID] FROM [Contractor]"></asp:SqlDataSource>
+    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:TeamProjectDBConnectionString1 %>" SelectCommand="SELECT [Name], [ID] FROM [Customer]" UpdateCommand="UPDATE [Plan] SET  Object=@Object, WorkType=@WorkType, CostName=@CostName, UnitName=@UnitName, Labor=@Labor, Materials=@Materials, Mechanisms=@Mechanisms    WHERE ID=@ID"  
+    DeleteCommand="DELETE FROM [Plan] WHERE ID=@ID" InsertCommand="INSERT INTO [Plan] (Object,WorkType,CostName,UnitName,Labor,Materials,Mechanisms,PlanID) VALUES ('','','','','','','',@id)" >
+        <insertparameters>
+            <asp:formparameter name="Object"  />
+            <asp:formparameter name="WorkType"   />
+            <asp:formparameter name="CostName"   />
+            <asp:formparameter name="UnitName"   />
+            <asp:formparameter name="Labor"   />
+            <asp:formparameter name="Materials"   />
+            <asp:formparameter name="Mechanisms"   />
+        </insertparameters>
+    </asp:SqlDataSource>
+    <asp:Button ID="Finish" runat="server" OnClick="Finish_Click" Text="Отправить план" Width="429px" />
     <asp:Panel runat="server" ID="Panel3">
             <asp:GridView BackColor="LightBlue" GridLines="Both" BorderWidth="1px" Width="" Caption="Факт" ID="GridView1" runat="server" AutoGenerateColumns="false" DataKeyNames="ID" OnRowCancelingEdit="GridView1_RowCancelingEdit" OnRowDeleting="GridView1_RowDeleting" OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating" ShowFooter="true" OnRowCommand="GridView1_RowCommand">
         <Columns>
@@ -116,7 +128,7 @@
                     <asp:LinkButton ID="lnkEdit" runat="server" CausesValidation="False" CommandName="Edit" Text="Edit"></asp:LinkButton> 
                 </ItemTemplate> 
             </asp:TemplateField>
-            <asp:CommandField ShowDeleteButton="false" />  
+            <asp:CommandField/>  
         </Columns>
                 <EditRowStyle CssClass="GridViewEditRow" />
                 <FooterStyle CssClass="GridViewEditRow" />

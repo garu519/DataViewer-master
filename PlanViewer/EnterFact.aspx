@@ -19,6 +19,27 @@
         </div>
     </asp:Panel>
     <div>
+        <asp:Panel ID="Panel5" runat ="server">
+            <asp:Table ID="Table" runat="server" Caption ="План" BackColor="LightGreen" BorderWidth="1px">
+                <asp:TableHeaderRow>
+                    <asp:TableHeaderCell Text="№  " BorderStyle="Solid" BorderColor="Black" BorderWidth="1px"></asp:TableHeaderCell>
+                    <asp:TableHeaderCell Text="Объект работ" BorderStyle="Solid" BorderColor="Black" BorderWidth="1px"></asp:TableHeaderCell>
+                    <asp:TableHeaderCell Text="Вид работ" BorderStyle="Solid" BorderColor="Black" BorderWidth="1px"></asp:TableHeaderCell>
+                    <asp:TableHeaderCell Text="Наименование единичной расценки" BorderStyle="Solid" BorderColor="Black" BorderWidth="1px"></asp:TableHeaderCell>
+                    <asp:TableHeaderCell Text="Единица измерения" BorderStyle="Solid" BorderColor="Black" BorderWidth="1px"></asp:TableHeaderCell>
+                    <asp:TableHeaderCell Text="Трудозатраты (План)" BorderStyle="Solid" BorderColor="Black" BorderWidth="1px"></asp:TableHeaderCell>
+                    <asp:TableHeaderCell Text="Трудозатраты (Факт)" BorderStyle="Solid" BorderColor="Black" BorderWidth="1px"></asp:TableHeaderCell>
+                    <asp:TableHeaderCell Text="Материалы (План)" BorderStyle="Solid" BorderColor="Black" BorderWidth="1px"></asp:TableHeaderCell>
+                    <asp:TableHeaderCell Text="Материалы (Факт)" BorderStyle="Solid" BorderColor="Black" BorderWidth="1px"></asp:TableHeaderCell>
+                    <asp:TableHeaderCell Text="Механизмы (План)" BorderStyle="Solid" BorderColor="Black" BorderWidth="1px"></asp:TableHeaderCell>
+                    <asp:TableHeaderCell Text="Механизмы (Факт)" BorderStyle="Solid" BorderColor="Black" BorderWidth="1px"></asp:TableHeaderCell>
+                    <asp:TableHeaderCell Text="Статус" BorderStyle="Solid" BorderColor="Black" BorderWidth="1px"></asp:TableHeaderCell>
+                </asp:TableHeaderRow>
+            </asp:Table>
+        </asp:Panel>
+        <asp:Button runat="server" ID="sendFact" Text="Отправить факт" OnClick="sendFact_Click"/>
+    </div>
+   <%-- <div>
         <asp:Panel ID="Panel2" runat ="server">
             <asp:Table ID="Table1" runat="server" Caption ="План" BackColor="LightGreen" BorderWidth="1px">
                 <asp:TableHeaderRow>
@@ -128,7 +149,7 @@
                 </FooterTemplate>
             </asp:TemplateField>        
             <%--<asp:CommandField ShowEditButton="true" />
-            <asp:CommandField ShowDeleteButton="true" />  --%>                                    
+            <asp:CommandField ShowDeleteButton="true" />                                     
             <asp:TemplateField HeaderText="Edit" ShowHeader="False" HeaderStyle-HorizontalAlign="Left"> 
                 <EditItemTemplate> 
                     <asp:LinkButton ID="lbkUpdate" runat="server" CausesValidation="True" CommandName="Update" Text="Update"></asp:LinkButton> 
@@ -150,5 +171,5 @@
     <asp:Panel runat="server" ID="Panel4">
         <asp:Button runat="server" ID="approve" Text="Отправить" OnClick="approve_Click"/>
         <asp:Button runat="server" ID="Cancel" Text="Отмена" OnClick="Cancel_Click"/>
-    </asp:Panel>
+    </asp:Panel>--%>
 </asp:Content>

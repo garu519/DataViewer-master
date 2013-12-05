@@ -15,8 +15,7 @@ namespace PlanViewer
     {
         string user;
         int id;
-        int counter;
-        int planID;
+        public static int planID=-1;//пустая строка в GV
         private static string connectionStr = WebConfigurationManager.ConnectionStrings["TeamProjectDBConnectionString1"].ConnectionString;
         private SqlConnection conn = new SqlConnection(connectionStr);
         protected void Page_Load(object sender, EventArgs e)
@@ -51,24 +50,31 @@ namespace PlanViewer
             }
             if (!Page.IsPostBack)
             {
-                counter = 0;
                 try
                 {
-                    Plan plan = new Plan { Contractor = id, CostName = "", WorkType = "", UnitName = "", Labor = "", Materials = "", Mechanisms = "", Status = 0, PlanID=-1 };
+                    //очищать бд Plan от записей с PlanID==-1 и всплывающие окна ---> TODO
+
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("DELETE [Plan] WHERE PlanId=" + -1, conn);
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+
+                    Plan plan = new Plan { Contractor = id, Object="", CostName = "", WorkType = "", UnitName = "", Labor = "", Materials = "", Mechanisms = "", Status = 0, PlanID=-1 };
                     db.Plans.InsertOnSubmit(plan);
                     db.SubmitChanges();
-                    var queryy =
+                   /* var queryy =
                     from pl in db.Plans
-                    where pl.Status == 0
+                    where pl.PlanID == -1
                     select pl;
                     if (queryy != null)
                     {
                         planID = queryy.ToArray()[0].ID;
                     }
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("update [Plan] set PlanID=" + planID + ", Status=" + 0 + " where Status=0", conn);
+                    SqlCommand cmd = new SqlCommand("update [Plan] set PlanID=" + planID + "where PlanID=" + -1, conn);
                     cmd.ExecuteNonQuery();
-                    conn.Close();
+                    conn.Close(); */
+                    planID = -1;
                     gvbind();
                     //GridView1.EditIndex = 0;
                 }
@@ -137,7 +143,7 @@ namespace PlanViewer
         {
             GridViewRow row = (GridViewRow)GridView1.Rows[e.RowIndex];
             Label lblID = (Label)row.FindControl("ID");
-            TextBox factObject = (TextBox)row.FindControl("Object");
+            TextBox factObject = (TextBox)row.FindControl("FactObject");
             TextBox worktype = (TextBox)row.FindControl("WorkType");
             TextBox costname = (TextBox)row.FindControl("CostName");
             TextBox unitname = (TextBox)row.FindControl("UnitName");
@@ -148,6 +154,7 @@ namespace PlanViewer
             int factId = int.Parse(lblID.Text);
             GridView1.EditIndex = -1;
             conn.Open();
+            if (planID == -1) planID = factId;
             SqlCommand cmd = new SqlCommand("update [Plan] set Object='" + factObject.Text
                 + "', WorkType='" + worktype.Text
                 + "', CostName='" + costname.Text
@@ -169,7 +176,7 @@ namespace PlanViewer
             {
                 GridViewRow row = GridView1.FooterRow;
                 Label lblID = (Label)row.FindControl("ID");
-                TextBox factObject = (TextBox)row.FindControl("Object");
+                TextBox factObject = (TextBox)row.FindControl("FactObject");
                 TextBox worktype = (TextBox)row.FindControl("WorkType");
                 TextBox costname = (TextBox)row.FindControl("CostName");
                 TextBox unitname = (TextBox)row.FindControl("UnitName");
@@ -179,41 +186,45 @@ namespace PlanViewer
                 GridView1.EditIndex = -1;
                 var db = new DBClassesDataContext();
 
-                try
+               try
                 {
 
-                    if (counter == 0)
+                    if (planID==-1)
                     {
-                        Plan plan = new Plan { Contractor = id, CostName = costname.Text, WorkType = worktype.Text, UnitName = unitname.Text, Labor = labor.Text, Materials = materials.Text, Mechanisms = mechanisms.Text, Customer = int.Parse(DropDownList1.SelectedValue), Status = 0, PlanID = -1 };
-                        db.Plans.InsertOnSubmit(plan);
-                        db.SubmitChanges();
+                       // Plan plan = new Plan { Contractor = id,Object = factObject.Text, CostName = costname.Text, WorkType = worktype.Text, UnitName = unitname.Text, Labor = labor.Text, Materials = materials.Text, Mechanisms = mechanisms.Text, Customer = int.Parse(DropDownList1.SelectedValue), Status = 0, PlanID = -1 };
+                       // db.Plans.InsertOnSubmit(plan);
+                       // db.SubmitChanges();
                         var query =
                         from pl in db.Plans
-                        where pl.Status == 0
+                        where pl.PlanID==-1
                         select pl;
                         if (query != null)
                         {
                             planID = query.ToArray()[0].ID;
                         }
                         conn.Open();
-                        SqlCommand cmd = new SqlCommand("update [Plan] set PlanID=" + planID + ", Status=" + 1 + " where Status=0", conn);
+                        SqlCommand cmd = new SqlCommand("update [Plan] set Contractor="+ id +", Object="+ factObject.Text +", CostName="+ costname.Text +", WorkType="+ worktype.Text + ", UnitName="+ unitname.Text+", Labor=" + labor.Text + ", Materials=" + materials.Text + ", Mechanisms="+mechanisms.Text +", PlanID=" + planID + ", Status=" + 1 + " where PlanID=" + -1, conn);
                         cmd.ExecuteNonQuery();
                         conn.Close();
-                        counter++;
                     }
                     else
                     {
-                        Plan plans = new Plan { Contractor = id, CostName = costname.Text, WorkType = worktype.Text, UnitName = unitname.Text, Labor = labor.Text, Materials = materials.Text, Mechanisms = mechanisms.Text, Customer = int.Parse(DropDownList1.SelectedValue), Status = 1, PlanID = planID };
+                        Plan plans = new Plan { Contractor = id, Object=factObject.Text, CostName = costname.Text, WorkType = worktype.Text, UnitName = unitname.Text, Labor = labor.Text, Materials = materials.Text, Mechanisms = mechanisms.Text, Customer = int.Parse(DropDownList1.SelectedValue), Status = 1, PlanID = planID };
                         db.Plans.InsertOnSubmit(plans);
                         db.SubmitChanges();
                     }
                     gvbind();
                 }
-                catch (Exception ex)
-                {
+               catch (Exception ex)
+               {
                     System.Diagnostics.Debug.Print(ex.StackTrace);
-                }
+               }
             }
+        }
+
+        protected void Finish_Click(object sender, EventArgs e)
+        {
+            Server.Transfer("Default.aspx", true);
         }
     }
 }

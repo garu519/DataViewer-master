@@ -163,7 +163,16 @@ namespace PlanViewer
                     from fact in db.Facts
                     where fact.ExtPlanID == item.ID
                     select fact;
-                Fact facts = fact_query.First<Fact>();
+                Fact facts;
+                try
+                {
+                    facts = fact_query.First<Fact>();
+                }
+                catch (Exception ex)
+                {
+                    facts = new Fact {Labor = "er", Materials = "er", Mechanisms = "er"};
+                }
+
                 TableRow tr = new TableRow();
                 List<TableCell> cells = new List<TableCell>();
                 TableCell c = new TableCell();

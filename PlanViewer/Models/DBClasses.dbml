@@ -22,26 +22,6 @@
       <Association Name="Contractor_Plan" Member="Plans" ThisKey="ID" OtherKey="Contractor" Type="Plan" />
     </Type>
   </Table>
-  <Table Name="dbo.[Plan]" Member="Plans">
-    <Type Name="Plan">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Object" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="WorkType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="UnitName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="CostName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Labor" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Materials" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Mechanisms" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Customer" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Contractor" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="PlanID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Association Name="Plan_Fact" Member="Facts" ThisKey="ID" OtherKey="ExtPlanID" Type="Fact" />
-      <Association Name="Contractor_Plan" Member="Contractor1" ThisKey="Contractor" OtherKey="ID" Type="Contractor" IsForeignKey="true" />
-      <Association Name="Customer_Plan" Member="Customer1" ThisKey="Customer" OtherKey="ID" Type="Customer" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Fact" Member="Facts">
     <Type Name="Fact">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -57,6 +37,27 @@
       <Column Name="FactID" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Status" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Plan_Fact" Member="Plan" ThisKey="ExtPlanID" OtherKey="ID" Type="Plan" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[Plan]" Member="Plans">
+    <Type Name="Plan">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Object" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="WorkType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="UnitName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CostName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Labor" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Materials" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Mechanisms" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Customer" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Contractor" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PlanID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="Plan_Fact" Member="Facts" ThisKey="ID" OtherKey="ExtPlanID" Type="Fact" />
+      <Association Name="Contractor_Plan" Member="Contractor1" ThisKey="Contractor" OtherKey="ID" Type="Contractor" IsForeignKey="true" />
+      <Association Name="Customer_Plan" Member="Customer1" ThisKey="Customer" OtherKey="ID" Type="Customer" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

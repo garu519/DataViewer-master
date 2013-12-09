@@ -33,6 +33,7 @@ namespace PlanViewer
         protected void Customer_Authenticate(object sender, AuthenticateEventArgs e)
         {            
             string email = Customer.UserName;
+            email = email.ToLower();
             if (string.IsNullOrWhiteSpace(email) || string.IsNullOrEmpty(email))
             {
                 Alert.Show("Некорректное имя пользователя!");
@@ -82,6 +83,7 @@ namespace PlanViewer
         protected void Contractor_Authenticate(object sender, AuthenticateEventArgs e)
         {
             string email = Contractor.UserName;
+            email = email.ToLower();
             if (string.IsNullOrWhiteSpace(email) || string.IsNullOrEmpty(email))
             {
                 Alert.Show("Некорректное имя пользователя!");
@@ -150,6 +152,7 @@ namespace PlanViewer
                   Alert.Show("Пароль должен состоять не менее чем из 6 символов");
                   return;
               }
+              email = email.ToLower();
             var db = new DBClassesDataContext();
 
 
@@ -210,7 +213,7 @@ namespace PlanViewer
              }
              var db = new DBClassesDataContext();
 
-
+             email = email.ToLower();
              Contractor c = new Contractor { Name = name, Email = email, Password = pas, Address="", Info="" };
              db.Contractors.InsertOnSubmit(c);
              try
@@ -248,11 +251,15 @@ namespace PlanViewer
          {
              try
              {
-                 SmtpClient Smtp = new SmtpClient("smtp.gmail.com", 25); //формируем письмо
-                 Smtp.Credentials = new NetworkCredential("abiturhse", "hseguest");
+                 SmtpClient Smtp = new SmtpClient("smtp.gmail.com", 587); //формируем письмо
+                 Smtp.UseDefaultCredentials = false;
+                 Smtp.Credentials = new NetworkCredential("techupmailer@gmail.com", "techup2013");
+
+
+                 Smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                  Smtp.EnableSsl = true;
                  MailMessage Message = new MailMessage();
-                 Message.From = new MailAddress("abiturhse@gmail.com");
+                 Message.From = new MailAddress("techupmailer@gmail.com");
                  Message.To.Add(new MailAddress(email));
                  Message.Subject = subject;
                  Message.Body = text;
@@ -263,5 +270,89 @@ namespace PlanViewer
                  System.Diagnostics.Debug.Print(ex.StackTrace);
              }
          }
+
+         protected void custRPass_Click(object sender, EventArgs e)
+         {
+             string email = femailcs.Text;
+             email = email.ToLower();
+             if (email == "")
+             {
+                 Alert.Show("Введите email!");
+             }
+             string connectionStr = WebConfigurationManager.ConnectionStrings["TeamProjectDBConnectionString1"].ConnectionString;
+            SqlConnection con = new SqlConnection(connectionStr);
+            con.Open();
+            string sqlUserName = "SELECT Name FROM Customer WHERE email ='" + email+"'";
+            SqlCommand cmd = new SqlCommand(sqlUserName, con);
+            string CurrentName;
+            CurrentName = (string)cmd.ExecuteScalar();
+            if (CurrentName != null)
+            {
+                var db = new DBClassesDataContext();
+                var query =
+                from customer in db.Customers
+                where customer.Email.Equals(email)
+                select customer;
+                Customer cust = (Customer)query.First();
+                string mes = "Здравствуйте, " + CurrentName + "\n"
+                    + "Ваш пароль в системе: " + cust.Password + "\nС уважением, администрация сервиса.";
+                string subj = "Восстановление пароля";
+                try
+                {
+                    sendEmail(email, subj, mes);
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.Print(ex.StackTrace);
+                }
+                Alert.Show("Письмо с Вашим паролем отправлено. Проверьте почту.");
+            }
+            else
+            {
+                Alert.Show("Пользователь с таким email не найден.");
+            }
+         }
+
+         protected void contRPass_Click(object sender, EventArgs e)
+         {
+             string email = femailco.Text;
+             email = email.ToLower();
+             if (email == "")
+             {
+                 Alert.Show("Введите email!");
+             }
+             string connectionStr = WebConfigurationManager.ConnectionStrings["TeamProjectDBConnectionString1"].ConnectionString;
+             SqlConnection con = new SqlConnection(connectionStr);
+             con.Open();
+             string sqlUserName = "SELECT Name FROM Contractor WHERE email ='" + email+"'";
+             SqlCommand cmd = new SqlCommand(sqlUserName, con);
+             string CurrentName;
+             CurrentName = (string)cmd.ExecuteScalar();
+             if (CurrentName != null)
+             {
+                 var db = new DBClassesDataContext();
+                 var query =
+                     from contractor in db.Contractors
+                     where contractor.Email.Equals(email)
+                     select contractor;
+                 Contractor cust = (Contractor)query.First();
+                 string mes = "Здравствуйте, " + CurrentName + "\n"
+                     + "Ваш пароль в системе: " + cust.Password + "\nС уважением, администрация сервиса.";
+                 string subj = "Восстановление пароля";
+                 try
+                 {
+                     sendEmail(email, subj, mes);
+                 }
+                 catch (Exception ex)
+                 {
+                     System.Diagnostics.Debug.Print(ex.StackTrace);
+                 }
+                 Alert.Show("Письмо с Вашим паролем отправлено. Проверьте почту.");
+             }
+             else
+             {
+                 Alert.Show("Пользователь с таким email не найден.");
+             }
+         }         
     }
 }

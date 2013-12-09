@@ -11,7 +11,7 @@
             <p class="message-success"><%: SuccessMessage %></p>
         </asp:PlaceHolder>
 
-        <p>You're logged in as <strong><%: User.Identity.Name %></strong>.</p>
+        <p>Вы зашли как <strong><%: User.Identity.Name %></strong>.</p>
 
         <asp:PlaceHolder runat="server" ID="setPassword" Visible="false">
             <p>
@@ -48,7 +48,7 @@
         </asp:PlaceHolder>
 
         <asp:PlaceHolder runat="server" ID="changePassword" Visible="false">
-            <h3>Change password</h3>
+            <h3>Сменить пароль</h3>
             <asp:ChangePassword runat="server" CancelDestinationPageUrl="~/" ViewStateMode="Disabled" RenderOuterTable="false" SuccessPageUrl="Manage?m=ChangePwdSuccess">
                 <ChangePasswordTemplate>
                     <p class="validation-summary-errors">
@@ -58,31 +58,31 @@
                         <legend>Change password details</legend>
                         <ol>
                             <li>
-                                <asp:Label runat="server" ID="CurrentPasswordLabel" AssociatedControlID="CurrentPassword">Current password</asp:Label>
+                                <asp:Label runat="server" ID="CurrentPasswordLabel" AssociatedControlID="CurrentPassword">Текущий пароль</asp:Label>
                                 <asp:TextBox runat="server" ID="CurrentPassword" CssClass="passwordEntry" TextMode="Password" />
                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="CurrentPassword"
-                                    CssClass="field-validation-error" ErrorMessage="The current password field is required."
+                                    CssClass="field-validation-error" ErrorMessage="Необходимо ввести текущий пароль."
                                     ValidationGroup="ChangePassword" />
                             </li>
                             <li>
-                                <asp:Label runat="server" ID="NewPasswordLabel" AssociatedControlID="NewPassword">New password</asp:Label>
+                                <asp:Label runat="server" ID="NewPasswordLabel" AssociatedControlID="NewPassword">Новый пароль</asp:Label>
                                 <asp:TextBox runat="server" ID="NewPassword" CssClass="passwordEntry" TextMode="Password" />
                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="NewPassword"
-                                    CssClass="field-validation-error" ErrorMessage="The new password is required."
+                                    CssClass="field-validation-error" ErrorMessage="Необходимо ввести новый пароль."
                                     ValidationGroup="ChangePassword" />
                             </li>
                             <li>
-                                <asp:Label runat="server" ID="ConfirmNewPasswordLabel" AssociatedControlID="ConfirmNewPassword">Confirm new password</asp:Label>
+                                <asp:Label runat="server" ID="ConfirmNewPasswordLabel" AssociatedControlID="ConfirmNewPassword">Новый пароль ещё раз</asp:Label>
                                 <asp:TextBox runat="server" ID="ConfirmNewPassword" CssClass="passwordEntry" TextMode="Password" />
                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="ConfirmNewPassword"
-                                    CssClass="field-validation-error" Display="Dynamic" ErrorMessage="Confirm new password is required."
+                                    CssClass="field-validation-error" Display="Dynamic" ErrorMessage="Необходимо водтверждение пароля."
                                     ValidationGroup="ChangePassword" />
                                 <asp:CompareValidator runat="server" ControlToCompare="NewPassword" ControlToValidate="ConfirmNewPassword"
-                                    CssClass="field-validation-error" Display="Dynamic" ErrorMessage="The new password and confirmation password do not match."
+                                    CssClass="field-validation-error" Display="Dynamic" ErrorMessage="Пароли не совпадают."
                                     ValidationGroup="ChangePassword" />
                             </li>
                         </ol>
-                        <asp:Button runat="server" CommandName="ChangePassword" Text="Change password" ValidationGroup="ChangePassword" />
+                        <asp:Button ID ="changeBtn" runat="server" CommandName="ChangePassword" Text="Изменить пароль" ValidationGroup="ChangePassword" OnClick="changeBtn_Click"/>
                     </fieldset>
                 </ChangePasswordTemplate>
             </asp:ChangePassword>
@@ -119,8 +119,5 @@
                 </tr>
             </ItemTemplate>
         </asp:ListView>
-
-        <h3>Add an external login</h3>
-        <uc:OpenAuthProviders runat="server" ReturnUrl="~/Account/Manage" />
     </section>
 </asp:Content>

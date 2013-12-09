@@ -16,6 +16,7 @@ namespace PlanViewer
         string user;
         int id;
         public static int planID=-1;//пустая строка в GV
+        public static int first = 0;
         private static string connectionStr = WebConfigurationManager.ConnectionStrings["TeamProjectDBConnectionString1"].ConnectionString;
         private SqlConnection conn = new SqlConnection(connectionStr);
         protected void Page_Load(object sender, EventArgs e)
@@ -59,9 +60,9 @@ namespace PlanViewer
                     cmd.ExecuteNonQuery();
                     conn.Close();
 
-                    Plan plan = new Plan { Contractor = id, Object="", CostName = "", WorkType = "", UnitName = "", Labor = "", Materials = "", Mechanisms = "", Status = 0, PlanID=-1 };
-                    db.Plans.InsertOnSubmit(plan);
-                    db.SubmitChanges();
+                   // Plan plan = new Plan { Contractor = id, Object="", CostName = "", WorkType = "", UnitName = "", Labor = "", Materials = "", Mechanisms = "", Status = 0, PlanID=-1 };
+                   // db.Plans.InsertOnSubmit(plan);
+                  //  db.SubmitChanges();
                    /* var queryy =
                     from pl in db.Plans
                     where pl.PlanID == -1
@@ -74,7 +75,7 @@ namespace PlanViewer
                     SqlCommand cmd = new SqlCommand("update [Plan] set PlanID=" + planID + "where PlanID=" + -1, conn);
                     cmd.ExecuteNonQuery();
                     conn.Close(); */
-                    planID = -1;
+                   // planID = -1;
                     gvbind();
                     //GridView1.EditIndex = 0;
                 }
@@ -109,30 +110,34 @@ namespace PlanViewer
                 GridView1.Rows[0].Cells.Clear();
                 GridView1.Rows[0].Cells.Add(new TableCell());
                 GridView1.Rows[0].Cells[0].ColumnSpan = columncount;
-                GridView1.Rows[0].Cells[0].Text = "Ошибка";
+                GridView1.Rows[0].Cells[0].Text = "Для создания плана напишите его название и добавьте строки в таблицу";
+
             }                
             
         }
         protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
         {
+            GridView1.Caption = PlanName.Text;
             GridView1.EditIndex = e.NewEditIndex;
             gvbind();
         }
 
         protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
+            GridView1.Caption = PlanName.Text;
             GridViewRow row = (GridViewRow)GridView1.Rows[e.RowIndex];
             Label lbldeleteid = (Label)row.FindControl("ID");
             conn.Open();
-            SqlCommand cmd = new SqlCommand("delete FROM Plan where ID=" + Convert.ToInt32(lbldeleteid.Text), conn);
+            SqlCommand cmd = new SqlCommand("delete FROM [Plan] where ID=" + Convert.ToInt32(lbldeleteid.Text), conn);
             cmd.ExecuteNonQuery();
             conn.Close();
-            if (GridView1.Rows.Count > 1)
+            //if (GridView1.Rows.Count > 1)
                 gvbind();
         }
 
         protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
+            GridView1.Caption = PlanName.Text;
             GridView1.EditIndex = -1;
             gvbind();
         }
@@ -141,6 +146,7 @@ namespace PlanViewer
 
         protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
+            GridView1.Caption = PlanName.Text;
             GridViewRow row = (GridViewRow)GridView1.Rows[e.RowIndex];
             Label lblID = (Label)row.FindControl("ID");
             TextBox factObject = (TextBox)row.FindControl("FactObject");
@@ -154,7 +160,8 @@ namespace PlanViewer
             int factId = int.Parse(lblID.Text);
             GridView1.EditIndex = -1;
             conn.Open();
-            if (planID == -1) planID = factId;
+          //  if (planID == -1) 
+          //  planID = factId;
             SqlCommand cmd = new SqlCommand("update [Plan] set Object='" + factObject.Text
                 + "', WorkType='" + worktype.Text
                 + "', CostName='" + costname.Text
@@ -164,6 +171,7 @@ namespace PlanViewer
                 + "', Mechanisms='" + mechanisms.Text
                 + "', PlanID=" + planID
                 + ", Status=" + 1
+                + ", Name" + PlanName.Text
                 + " where ID=" + factId, conn);
             cmd.ExecuteNonQuery();
             conn.Close();
@@ -172,8 +180,23 @@ namespace PlanViewer
 
         protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            GridView1.Caption = PlanName.Text;
             if (e.CommandName.Equals("Insert"))
             {
+                if (first == 0)
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("Select ID, Object, WorkType, UnitName, CostName, Labor, Materials, Mechanisms from [Plan] where PlanID=" + planID, conn);
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    DataSet ds = new DataSet();
+                    da.Fill(ds);
+                    conn.Close();
+
+                    ds.Tables[0].Rows.Clear();
+                    GridView1.DataSource = ds;
+                    GridView1.DataBind();
+
+                }
                 GridViewRow row = GridView1.FooterRow;
                 Label lblID = (Label)row.FindControl("ID");
                 TextBox factObject = (TextBox)row.FindControl("FactObject");
@@ -191,9 +214,9 @@ namespace PlanViewer
 
                     if (planID==-1)
                     {
-                       // Plan plan = new Plan { Contractor = id,Object = factObject.Text, CostName = costname.Text, WorkType = worktype.Text, UnitName = unitname.Text, Labor = labor.Text, Materials = materials.Text, Mechanisms = mechanisms.Text, Customer = int.Parse(DropDownList1.SelectedValue), Status = 0, PlanID = -1 };
-                       // db.Plans.InsertOnSubmit(plan);
-                       // db.SubmitChanges();
+                        Plan plan = new Plan { Contractor = id,Object = factObject.Text, CostName = costname.Text, WorkType = worktype.Text, UnitName = unitname.Text, Labor = labor.Text, Materials = materials.Text, Mechanisms = mechanisms.Text, Customer = int.Parse(DropDownList1.SelectedValue), Status = 0, PlanID = -1, Name=PlanName.Text };
+                        db.Plans.InsertOnSubmit(plan);
+                        db.SubmitChanges();
                         var query =
                         from pl in db.Plans
                         where pl.PlanID==-1
@@ -202,8 +225,18 @@ namespace PlanViewer
                         {
                             planID = query.ToArray()[0].ID;
                         }
+                        /*
                         conn.Open();
                         SqlCommand cmd = new SqlCommand("update [Plan] set Contractor="+ id +", Object="+ factObject.Text +", CostName="+ costname.Text +", WorkType="+ worktype.Text + ", UnitName="+ unitname.Text+", Labor=" + labor.Text + ", Materials=" + materials.Text + ", Mechanisms="+mechanisms.Text +", PlanID=" + planID + ", Status=" + 1 + " where PlanID=" + -1, conn);
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                        */
+                        Plan plans = new Plan { Contractor = id, Object = factObject.Text, CostName = costname.Text, WorkType = worktype.Text, UnitName = unitname.Text, Labor = labor.Text, Materials = materials.Text, Mechanisms = mechanisms.Text, Customer = int.Parse(DropDownList1.SelectedValue), Status = 1, PlanID = planID };
+                        db.Plans.InsertOnSubmit(plans);
+                        db.SubmitChanges();
+
+                        conn.Open();
+                        SqlCommand cmd = new SqlCommand("DELETE [Plan] WHERE PlanID=" + -1, conn);
                         cmd.ExecuteNonQuery();
                         conn.Close();
                     }
@@ -224,7 +257,25 @@ namespace PlanViewer
 
         protected void Finish_Click(object sender, EventArgs e)
         {
-            Server.Transfer("Default.aspx", true);
+
+            Alert.Show("План успешно отправлен!");
+           // Response.Redirect(Request.RawUrl);
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("Select ID, Object, WorkType, UnitName, CostName, Labor, Materials, Mechanisms from [Plan] where PlanID=" + planID, conn);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+            conn.Close();
+            ds.Tables[0].Rows.Clear();
+            GridView1.DataSource = ds;
+            GridView1.DataBind();
+
+            gvbind();
+        }
+
+        protected void PlanName_TextChanged(object sender, EventArgs e)
+        {
+            GridView1.Caption = PlanName.Text;
         }
     }
 }

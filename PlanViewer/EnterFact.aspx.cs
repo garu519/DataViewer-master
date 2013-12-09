@@ -53,33 +53,18 @@ namespace PlanViewer
             }
             if (!Page.IsPostBack)
             {
-                providerstring = "SELECT Customer.Name, [Plan].PlanID FROM Contractor INNER JOIN [Plan] ON Contractor.ID = [Plan].Contractor INNER JOIN Customer ON [Plan].Customer = Customer.ID where Contractor.ID=" + id + " GROUP BY [Plan].PlanID , Customer.Name";
+                providerstring = "SELECT CONCAT (N'Заказчик: ', Customer.Name , N', План: ' , [Plan].Name) AS res, [Plan].PlanID FROM Contractor INNER JOIN [Plan] ON Contractor.ID = [Plan].Contractor INNER JOIN Customer ON [Plan].Customer = Customer.ID where Contractor.ID=" + id + " AND (Status=3 OR Status=5) GROUP BY [Plan].PlanID, [Plan].Name, Customer.Name";
                 SqlDataSource1.SelectCommand = string.Format(providerstring);
                 DataBind();
-            }
-            //Session["UserID"] = id;   
-            //DropDownList1.DataBind();
+            }            
             if (!Page.IsPostBack)
             {
                 firstTableBuilding = true;
             }
             else
-            {
-                //firstTableBuilding = false;
+            {                
                 buildPlanTable();
-            }
-            ////try
-            ////{
-            ////    if (int.Parse(DropDownList1.SelectedValue) > 0)
-            ////        buildPlanTable();
-            ////}
-            ////catch
-            ////{
-            ////}
-            ////if (!Page.IsPostBack)
-            ////{
-            ////    gvbind();    
-            ////}
+            }            
         }
         private void buildPlanTable()
         {
@@ -93,14 +78,33 @@ namespace PlanViewer
                 from plan in db.Plans
                 where plan.PlanID == int.Parse(DropDownList1.SelectedValue)
                 select plan;
-            Plan[] results = query.ToArray<Plan>();
+            Plan[] results = null;
+            try
+            {
+                results = query.ToArray<Plan>();
+            }
+            catch (Exception ex)
+            {
+                Table.Visible = false;
+                sendFact.Visible = false;
+                DropDownList1.Visible = false;
+                return;
+            }
+            if (results[0].Status == 5)
+            { 
+                
+            }
             foreach (Plan item in results)
             {
-
+                Table.Caption = item.Name;
+                Table.Visible = true;
+                sendFact.Visible = true;
+                DropDownList1.Visible = true;
                 TableRow tr = new TableRow();
                 List<TableCell> cells = new List<TableCell>();
                 TableCell c = new TableCell();
                 c.Text = item.ID + "";
+                c.Visible = false;
                 cells.Add(c);
 
                 c = new TableCell();
@@ -124,8 +128,10 @@ namespace PlanViewer
                 cells.Add(c);
 
                 c = new TableCell();
-                TextBox l = new TextBox();                
-                l.Width = 50;
+                c.BackColor = System.Drawing.Color.LightBlue;
+                TextBox l = new TextBox();
+                l.Width = 70;
+                l.BackColor = System.Drawing.Color.LightBlue;
                 if (firstTableBuilding)
                     l.Text = item.Labor;
                 //l.AutoPostBack = true;
@@ -137,8 +143,10 @@ namespace PlanViewer
                 cells.Add(c);
 
                 c = new TableCell();
+                c.BackColor = System.Drawing.Color.LightBlue;
                 l = new TextBox();
-                l.Width = 50;
+                l.Width = 70;               
+                l.BackColor = System.Drawing.Color.LightBlue;
                 if (firstTableBuilding)
                     l.Text = item.Materials;
                 //l.AutoPostBack = true;
@@ -150,8 +158,10 @@ namespace PlanViewer
                 cells.Add(c);
 
                 c = new TableCell();
+                c.BackColor = System.Drawing.Color.LightBlue;
                 l = new TextBox();
-                l.Width = 50;
+                l.Width = 70;
+                l.BackColor = System.Drawing.Color.LightBlue;
                 if (firstTableBuilding)
                     l.Text = item.Mechanisms;
                 //l.AutoPostBack = true;
@@ -159,7 +169,8 @@ namespace PlanViewer
                 cells.Add(c);
 
                 c = new TableCell();
-                c.Text = item.Status+"";                
+                c.Text = item.Status+"";
+                c.Visible = false;
                 cells.Add(c);
 
                 foreach (TableCell cell in cells)
@@ -310,29 +321,7 @@ namespace PlanViewer
           //  gvbind();
         }
 
-        //protected void approve_Click(object sender, EventArgs e)
-        //{
-        //    conn.Open();
-        //    SqlCommand cmd = new SqlCommand("update Fact set Status=2 where FactID=" + planID, conn);
-        //    cmd.ExecuteNonQuery();
-        //    conn.Close();
-        //    Alert.Show("Значения сохранены");
-        //    Response.Redirect("CreatePlan.aspx");
-        //}
-
-        //protected void Cancel_Click(object sender, EventArgs e)
-        //{
-        //    conn.Open();
-        //    SqlCommand cmd = new SqlCommand("delete FROM Fact where FactID=" + planID, conn);
-        //    cmd.ExecuteNonQuery();
-        //    conn.Close();
-        //    Response.Redirect("CreatePlan.aspx");
-        //}
-
-        //protected void GridView1_RowCreated(object sender, GridViewRowEventArgs e)
-        //{
-
-        //}
+       
 
         protected void sendFact_Click(object sender, EventArgs e)
         {            
@@ -378,6 +367,13 @@ namespace PlanViewer
                 db.SubmitChanges();   
                 db.Facts.InsertAllOnSubmit(facts);
                 db.SubmitChanges();
+                String updatePlan = "UPDATE [Plan] SET Status=5 WHERE PlanID=" + planID;
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(updatePlan, conn);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                Alert.Show("Фактические значения успешно отправлены!");
+                Response.Redirect("NewPlan.aspx");
             }
             catch (Exception ex)
             {

@@ -63,7 +63,7 @@
         <br />
     </div>
     <br>
-    <div style="margin-left: auto; margin-right: auto; text-align: center;">
+    <div style="margin-left: auto; margin-right: auto; text-align: center; ">
         <a class="green goodbutton" id="customerRegister" rel="leanModal" href="#signupCustomer">Зарегистрировать заказчика</a>
         <br>
         <a class="green goodbutton" id="contractorRegister" rel="leanModal" href="#signupContractor">Зарегистрировать подрядчика</a>

@@ -94,8 +94,7 @@ namespace PlanViewer.Account
 
         protected void changeBtn_Click(object sender, EventArgs e)
         {
-
-        }
-       
+            
+        }       
     }
 }

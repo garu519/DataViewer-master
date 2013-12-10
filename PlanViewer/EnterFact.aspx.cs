@@ -88,18 +88,21 @@ namespace PlanViewer
                 Table.Visible = false;
                 sendFact.Visible = false;
                 DropDownList1.Visible = false;
+                NoPlan.Visible = true;
                 return;
             }
             if (results[0].Status == 5)
             { 
                 
             }
+            Table.Visible = true;
+            sendFact.Visible = true;
+            DropDownList1.Visible = true;
+            NoPlan.Visible = false;
             foreach (Plan item in results)
             {
                 Table.Caption = item.Name;
-                Table.Visible = true;
-                sendFact.Visible = true;
-                DropDownList1.Visible = true;
+                
                 TableRow tr = new TableRow();
                 List<TableCell> cells = new List<TableCell>();
                 TableCell c = new TableCell();

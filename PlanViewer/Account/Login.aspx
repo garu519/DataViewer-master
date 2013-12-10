@@ -34,38 +34,36 @@
             $('a[rel*=leanModal]').leanModal({ top: 200, overlay: 0.4, closeButton: ".modal_close" });
         });
     </script>
-    <div>
-        <div style="float: left">
-            <asp:Login ID="Customer" runat="server"
-                RememberMeSet="false"
-                DisplayRememberMe="false"
-                LoginButtonText="Войти как заказчик"
-                UserNameLabelText="email"
-                FailureText="Неверный логин или пароль"
-                TitleText="Вход для заказчика"
-                DestinationPageUrl="~/Default.aspx" OnAuthenticate="Customer_Authenticate" Width="374px">
-            </asp:Login>
-            <div>
-                <a class="green goodbutton" id="A1" rel="leanModal" href="#customerLostPass">Восстановить пароль</a>
-                <br />
-            </div>
-        </div>
-        <div style="float: right">
-            <asp:Login ID="Contractor" runat="server"
-                RememberMeSet="false"
-                DisplayRememberMe="false"
-                LoginButtonText="Войти как подрядчик"
-                UserNameLabelText="email"
-                FailureText="Неверный логин или пароль"
-                TitleText="Вход для подрядчика"
-                DestinationPageUrl="~/Default.aspx" OnAuthenticate="Contractor_Authenticate" Width="372px">
-            </asp:Login>
-            <a class="right" style="text-align: right; float: right" id="A2" rel="leanModal" href="#contractorLostPass">Восстановить пароль</a>
+    <div style="float: left">
+        <asp:Login ID="Customer" runat="server"
+            RememberMeSet="false"
+            DisplayRememberMe="false"
+            LoginButtonText="Войти как заказчик"
+            UserNameLabelText="email"
+            FailureText="Неверный логин или пароль"
+            TitleText="Вход для заказчика"
+            DestinationPageUrl="~/Default.aspx" OnAuthenticate="Customer_Authenticate">
+        </asp:Login>
+        <div>
+            <a class="green goodbutton" id="A1" rel="leanModal" href="#customerLostPass" >Восстановить пароль</a>
             <br />
         </div>
     </div>
+    <div style="float: right">
+        <asp:Login ID="Contractor" runat="server"
+            RememberMeSet="false"
+            DisplayRememberMe="false"
+            LoginButtonText="Войти как подрядчик"
+            UserNameLabelText="email"
+            FailureText="Неверный логин или пароль"
+            TitleText="Вход для подрядчика"
+            DestinationPageUrl="~/Default.aspx" OnAuthenticate="Contractor_Authenticate">
+        </asp:Login>
+        <a class="right" style="text-align: right; float: right" id="A2" rel="leanModal" href="#contractorLostPass" >Восстановить пароль</a>
+        <br />
+    </div>
     <br>
-    <div style="margin-left: auto; margin-right: auto; text-align: center; height: 64px; width: 799px;">
+    <div style="margin-left: auto; margin-right: auto; text-align: center; ">
         <a class="green goodbutton" id="customerRegister" rel="leanModal" href="#signupCustomer">Зарегистрировать заказчика</a>
         <br>
         <a class="green goodbutton" id="contractorRegister" rel="leanModal" href="#signupContractor">Зарегистрировать подрядчика</a>
@@ -154,7 +152,7 @@
                         <label for="">Введите ваш email</label>
                         <br />
                         <asp:TextBox runat="server" ID="femailcs" TextMode="Email" />
-                    </div>
+                    </div>                    
 
                     <div class="btn-fld">
                         <asp:Button runat="server" ID="custRPass" type="submit" OnClick="custRPass_Click" Text="Отправить пароль"></asp:Button>
@@ -174,7 +172,7 @@
                         <label for="">Введите ваш email</label>
                         <br />
                         <asp:TextBox runat="server" ID="femailco" TextMode="Email" />
-                    </div>
+                    </div>                    
 
                     <div class="btn-fld">
                         <asp:Button runat="server" ID="contRPass" type="submit" OnClick="contRPass_Click" Text="Отправить пароль"></asp:Button>

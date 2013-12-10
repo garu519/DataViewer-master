@@ -49,13 +49,13 @@ namespace PlanViewer
             var db = new DBClassesDataContext();
             var query =
                 from customer in db.Customers
-                where customer.Email.Equals("customer@cust")
+                where customer.Email.Equals(user)
                 select customer;
             if (query != null)
             {
                 id = query.ToArray()[0].ID;
             }
-            providerstring = "SELECT CONCAT (N'Подрядчик: ', Contractor.Name , N', План: ' , [Plan].Name) AS res, [Plan].PlanID FROM [Plan] INNER JOIN Contractor ON Contractor.ID = [Plan].Contractor INNER JOIN Customer ON [Plan].Customer = 24 GROUP BY [Plan].PlanID, [Plan].Name, Contractor.Name";
+            providerstring = "SELECT CONCAT (N'Подрядчик: ', Contractor.Name , N', План: ' , [Plan].Name) AS res, [Plan].PlanID FROM [Plan] INNER JOIN Contractor ON Contractor.ID = [Plan].Contractor INNER JOIN Customer ON [Plan].Customer = "+id+" GROUP BY [Plan].PlanID, [Plan].Name, Contractor.Name";
             //providerstring = "SELECT Contractor.Name, [Plan].Name FROM [Plan] INNER JOIN [Customer] ON [Customer].[ID] = [Plan].[Customer] INNER JOIN [Contractor] ON [Plan].Customer = Customer.ID where Contractor.ID=10 GROUP BY [Plan].PlanID , Customer.Name";
             SqlDataSource1.SelectCommand = string.Format(providerstring);
             DataBind();
@@ -69,9 +69,9 @@ namespace PlanViewer
             catch
             {
             }
-            if (!Page.IsPostBack)
+            if (Page.IsPostBack)
             {
-                //gvbind();
+                buildPlanTable();
             }
         }
         [WebMethod(EnableSession = true)]

@@ -166,7 +166,7 @@ namespace PlanViewer
             {
                 results = query.ToArray<Plan>();
                 Table1.Caption = results[0].Name;
-                if (results[0].Status <= 3)
+                if (results[0].Status < 3 || results[0].Status==4)
                 {
                     Table1.Caption += ", " + "Не одобрен";
                     approve.Visible = true;
@@ -402,39 +402,57 @@ namespace PlanViewer
 
         protected void approve_Click(object sender, EventArgs e)
         {
-            var db = new DBClassesDataContext();
-            var query =
-                from plan in db.Plans
-                where plan.PlanID == int.Parse(DropDownList1.SelectedValue)
-                select plan;
-            query.ToArray()[0].Status = 3;
+            //var db = new DBClassesDataContext();
+            //var query =
+            //    from plan in db.Plans
+            //    where plan.PlanID == int.Parse(DropDownList1.SelectedValue)
+            //    select plan;
+            //query.ToArray()[0].Status = 3;
             try
             {
-                db.SubmitChanges();
+                String updatePlan = "UPDATE [Plan] SET Status=3 WHERE PlanID=" + planID;
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(updatePlan, conn);
+                cmd.ExecuteNonQuery();
+                conn.Close();
             }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception.StackTrace);
-            }
+            catch { }
+            //try
+            //{
+            //    db.SubmitChanges();
+            //}
+            //catch (Exception exception)
+            //{
+            //    Console.WriteLine(exception.StackTrace);
+            //}
 
         }
 
         protected void reject_Click(object sender, EventArgs e)
         {
-            var db = new DBClassesDataContext();
-            var query =
-                from plan in db.Plans
-                where plan.PlanID == int.Parse(DropDownList1.SelectedValue)
-                select plan;
-            query.ToArray()[0].Status = 4;
+            //var db = new DBClassesDataContext();
+            //var query =
+            //    from plan in db.Plans
+            //    where plan.PlanID == int.Parse(DropDownList1.SelectedValue)
+            //    select plan;
+            //query.ToArray()[0].Status = 4;
+            //try
+            //{
+            //    db.SubmitChanges();
+            //}
+            //catch (Exception exception)
+            //{
+            //    Console.WriteLine(exception.StackTrace);
+            //}
             try
             {
-                db.SubmitChanges();
+                String updatePlan = "UPDATE [Plan] SET Status=4 WHERE PlanID=" + planID;
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(updatePlan, conn);
+                cmd.ExecuteNonQuery();
+                conn.Close();
             }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception.StackTrace);
-            }
+            catch { }
 
         }
 

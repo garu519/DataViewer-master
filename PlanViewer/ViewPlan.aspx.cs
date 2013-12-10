@@ -499,7 +499,8 @@ namespace PlanViewer
                     Message.To.Add(new MailAddress(ct.Email));
                     Message.Subject = "Запрос по плану: " + pl.Name + " "+ Subject.Text + " ";
                     Message.Body = "Заказчик: "+cs.Name +"\n" + MessageText.Text;
-                    Smtp.Send(Message); //отправляем письмо                  
+                    Smtp.Send(Message); //отправляем письмо 
+                    Alert.Show("Письмо успешно отправлено!");
                 }
                 catch (Exception ex)
                 {

@@ -24,7 +24,7 @@
         <asp:Panel ID="Panel2" runat ="server">
             <asp:Table ID="Table1" runat="server" Caption ="План/Факт" BackColor="#79EA48" BorderWidth="1px" BorderStyle="Solid" GridLines="Both" BorderColor="Black" ForeColor="Black">
                 <asp:TableHeaderRow>
-                    <asp:TableHeaderCell Text="№  " BorderStyle="Solid" BorderColor="Black" BorderWidth="1px"></asp:TableHeaderCell>
+                    <asp:TableHeaderCell Text="№  " BorderStyle="Solid" BorderColor="Black" BorderWidth="1px" Visible="false"></asp:TableHeaderCell>
                     <asp:TableHeaderCell Text="Объект работ" BorderStyle="Solid" BorderColor="Black" BorderWidth="1px"></asp:TableHeaderCell>
                     <asp:TableHeaderCell Text="Вид работ" BorderStyle="Solid" BorderColor="Black" BorderWidth="1px"></asp:TableHeaderCell>
                     <asp:TableHeaderCell Text="Наименование единичной расценки" BorderStyle="Solid" BorderColor="Black" BorderWidth="1px"></asp:TableHeaderCell>
@@ -35,7 +35,7 @@
                     <asp:TableHeaderCell Text="Материалы (факт)" BackColor="PowderBlue" BorderStyle="Solid" BorderColor="Black" BorderWidth="1px"></asp:TableHeaderCell>
                     <asp:TableHeaderCell Text="Механизмы (план)" BorderStyle="Solid" BorderColor="Black" BorderWidth="1px"></asp:TableHeaderCell>
                     <asp:TableHeaderCell Text="Механизмы (факт)" BackColor="PowderBlue" BorderStyle="Solid" BorderColor="Black" BorderWidth="1px"></asp:TableHeaderCell>
-                    <asp:TableHeaderCell Text="Статус" BorderStyle="Solid" BorderColor="Black" BorderWidth="1px"></asp:TableHeaderCell>
+                    <asp:TableHeaderCell Text="Статус" BorderStyle="Solid" BorderColor="Black" BorderWidth="1px" Visible="false"></asp:TableHeaderCell>
                 </asp:TableHeaderRow>
             </asp:Table>
         </asp:Panel>

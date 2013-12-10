@@ -201,6 +201,7 @@ namespace PlanViewer
                     c.BorderStyle = BorderStyle.Solid;
                     c.BorderWidth = 1;
                     c.BorderColor = System.Drawing.Color.Black;
+                    c.Visible = false;
                     cells.Add(c);
                     c = new TableCell();
                     c.Text = item.Object;
@@ -270,6 +271,7 @@ namespace PlanViewer
                     c.BorderStyle = BorderStyle.Solid;
                     c.BorderWidth = 1;
                     c.BorderColor = System.Drawing.Color.Black;
+                    c.Visible = false;
                     //c.Enabled = true;
                     cells.Add(c);
                     foreach (TableCell cell in cells)

@@ -471,26 +471,40 @@ namespace PlanViewer
         protected void sendRequest_Click(object sender, EventArgs e)
         {
             {
-                //try
-                //{
+                try
+                {
                     SmtpClient Smtp = new SmtpClient("smtp.gmail.com", 587); //формируем письмо
                     Smtp.UseDefaultCredentials = false;
-                    Smtp.Credentials = new NetworkCredential("abiturhse@gmail.com", "hseguest");
-                    
-                    
+                    Smtp.Credentials = new NetworkCredential("techupmailer@gmail.com", "techup2013");                                        
                     Smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                     Smtp.EnableSsl = true;
                     MailMessage Message = new MailMessage();
-                    Message.From = new MailAddress("abiturhse@gmail.com");
-                    Message.To.Add(new MailAddress("12_123@mail.ru"));
-                    Message.Subject = Subject.Text;
-                    Message.Body = MessageText.Text;
+                    Message.From = new MailAddress("techupmailer@gmail.com");
+                    var db = new DBClassesDataContext();
+                    var query =
+                        from plan in db.Plans
+                        where plan.PlanID == planID
+                        select plan;
+                    Plan pl = query.First();
+                    var query2 =
+                        from contr in db.Contractors
+                        where contr.ID == pl.Contractor
+                        select contr;
+                    Contractor ct = query2.First();
+                    var query3 =
+                        from cust in db.Customers
+                        where cust.ID == id
+                        select cust;
+                    Customer cs = query3.First();
+                    Message.To.Add(new MailAddress(ct.Email));
+                    Message.Subject = "Запрос по плану: " + pl.Name + " "+ Subject.Text + " ";
+                    Message.Body = "Заказчик: "+cs.Name +"\n" + MessageText.Text;
                     Smtp.Send(Message); //отправляем письмо                  
-                //}
-                //catch (Exception ex)
-                //{
-                //    System.Diagnostics.Debug.Print(ex.StackTrace);
-                //}
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.Print(ex.StackTrace);
+                }
             }
         }
     }

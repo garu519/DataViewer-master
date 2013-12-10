@@ -76,6 +76,15 @@ namespace PlanViewer {
         protected global::System.Web.UI.WebControls.Button approve;
         
         /// <summary>
+        /// reject control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button reject;
+        
+        /// <summary>
         /// download control.
         /// </summary>
         /// <remarks>
@@ -94,6 +103,15 @@ namespace PlanViewer {
         protected global::System.Web.UI.WebControls.Panel Panel5;
         
         /// <summary>
+        /// Label1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
+        
+        /// <summary>
         /// Subject control.
         /// </summary>
         /// <remarks>
@@ -101,6 +119,15 @@ namespace PlanViewer {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox Subject;
+        
+        /// <summary>
+        /// Label2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
         /// MessageText control.

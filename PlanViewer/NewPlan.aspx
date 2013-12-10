@@ -9,10 +9,10 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="FeaturedContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:DropDownList ID="DropDownList1" runat="server" DataSourceID="SqlDataSource1" DataTextField="Name" DataValueField="ID">
+    <asp:DropDownList ID="DropDownList1" runat="server" DataSourceID="SqlDataSource1" DataTextField="Email" DataValueField="ID">
     </asp:DropDownList>
-    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:TeamProjectDBConnectionString1 %>" SelectCommand="SELECT [Name], [ID] FROM [Customer]" UpdateCommand="UPDATE [Plan] SET  Object=@Object, WorkType=@WorkType, CostName=@CostName, UnitName=@UnitName, Labor=@Labor, Materials=@Materials, Mechanisms=@Mechanisms    WHERE ID=@ID"  
-    DeleteCommand="DELETE FROM [Plan] WHERE ID=@ID" InsertCommand="INSERT INTO [Plan] (Object,WorkType,CostName,UnitName,Labor,Materials,Mechanisms,PlanID) VALUES ('','','','','','','',@id)" >
+    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:TeamProjectDBConnectionString1 %>" SelectCommand="SELECT [Email], [ID] FROM [Customer]" UpdateCommand="UPDATE [Plan] SET  Object=@Object, WorkType=@WorkType, CostName=@CostName, UnitName=@UnitName, Labor=@Labor, Materials=@Materials, Mechanisms=@Mechanisms, Name=@Name WHERE ID=@ID"  
+    DeleteCommand="DELETE FROM [Plan] WHERE ID=@ID" InsertCommand="INSERT INTO [Plan] (Object,WorkType,CostName,UnitName,Labor,Materials,Mechanisms,Name,PlanID) VALUES ('','','','','','','',@name,@id)" >
         <insertparameters>
             <asp:formparameter name="Object"  />
             <asp:formparameter name="WorkType"   />
@@ -21,6 +21,7 @@
             <asp:formparameter name="Labor"   />
             <asp:formparameter name="Materials"   />
             <asp:formparameter name="Mechanisms"   />
+            <asp:formparameter name="Name" />
         </insertparameters>
     </asp:SqlDataSource>
     <asp:Panel runat="server" ID="Panel3">

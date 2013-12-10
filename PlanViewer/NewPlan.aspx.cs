@@ -60,22 +60,6 @@ namespace PlanViewer
                     cmd.ExecuteNonQuery();
                     conn.Close();
 
-                   // Plan plan = new Plan { Contractor = id, Object="", CostName = "", WorkType = "", UnitName = "", Labor = "", Materials = "", Mechanisms = "", Status = 0, PlanID=-1 };
-                   // db.Plans.InsertOnSubmit(plan);
-                  //  db.SubmitChanges();
-                   /* var queryy =
-                    from pl in db.Plans
-                    where pl.PlanID == -1
-                    select pl;
-                    if (queryy != null)
-                    {
-                        planID = queryy.ToArray()[0].ID;
-                    }
-                    conn.Open();
-                    SqlCommand cmd = new SqlCommand("update [Plan] set PlanID=" + planID + "where PlanID=" + -1, conn);
-                    cmd.ExecuteNonQuery();
-                    conn.Close(); */
-                   // planID = -1;
                     gvbind();
                     //GridView1.EditIndex = 0;
                 }
@@ -162,7 +146,7 @@ namespace PlanViewer
             conn.Open();
           //  if (planID == -1) 
           //  planID = factId;
-            SqlCommand cmd = new SqlCommand("update [Plan] set Object='" + factObject.Text
+          SqlCommand cmd = new SqlCommand("update [Plan] set Object='" + factObject.Text
                 + "', WorkType='" + worktype.Text
                 + "', CostName='" + costname.Text
                 + "', UnitName='" + unitname.Text
@@ -171,10 +155,11 @@ namespace PlanViewer
                 + "', Mechanisms='" + mechanisms.Text
                 + "', PlanID=" + planID
                 + ", Status=" + 1
-                + ", Name" + PlanName.Text
-                + " where ID=" + factId, conn);
+                + ", Name='" + PlanName.Text
+                + "' where ID=" + factId, conn);
             cmd.ExecuteNonQuery();
             conn.Close();
+           
             gvbind();
         }
 
@@ -260,17 +245,25 @@ namespace PlanViewer
 
             Alert.Show("План успешно отправлен!");
            // Response.Redirect(Request.RawUrl);
-            conn.Open();
-            SqlCommand cmd = new SqlCommand("Select ID, Object, WorkType, UnitName, CostName, Labor, Materials, Mechanisms from [Plan] where PlanID=" + planID, conn);
+           conn.Open();
+           SqlCommand cmd = new SqlCommand("Select ID, Object, WorkType, UnitName, CostName, Labor, Materials, Mechanisms from [Plan] where PlanID=" + planID, conn);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
             da.Fill(ds);
             conn.Close();
+          
             ds.Tables[0].Rows.Clear();
+            ds.Tables[0].Clear();
+
+            ds.Tables[0].Rows.Add(ds.Tables[0].NewRow());
             GridView1.DataSource = ds;
             GridView1.DataBind();
-
-            gvbind();
+            int columncount = GridView1.Rows[0].Cells.Count;
+            GridView1.Rows[0].Cells.Clear();
+            GridView1.Rows[0].Cells.Add(new TableCell());
+            GridView1.Rows[0].Cells[0].ColumnSpan = columncount;
+            GridView1.Rows[0].Cells[0].Text = "Для создания плана напишите его название и добавьте строки в таблицу";
+            planID = -1;
         }
 
         protected void PlanName_TextChanged(object sender, EventArgs e)

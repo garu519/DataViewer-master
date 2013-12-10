@@ -43,7 +43,7 @@
                 UserNameLabelText="email"
                 FailureText="Неверный логин или пароль"
                 TitleText="Вход для заказчика"
-                DestinationPageUrl="~/Default.aspx" OnAuthenticate="Customer_Authenticate">
+                DestinationPageUrl="~/Default.aspx" OnAuthenticate="Customer_Authenticate" Width="374px">
             </asp:Login>
             <div>
                 <a class="green goodbutton" id="A1" rel="leanModal" href="#customerLostPass">Восстановить пароль</a>
@@ -58,14 +58,14 @@
                 UserNameLabelText="email"
                 FailureText="Неверный логин или пароль"
                 TitleText="Вход для подрядчика"
-                DestinationPageUrl="~/Default.aspx" OnAuthenticate="Contractor_Authenticate">
+                DestinationPageUrl="~/Default.aspx" OnAuthenticate="Contractor_Authenticate" Width="372px">
             </asp:Login>
             <a class="right" style="text-align: right; float: right" id="A2" rel="leanModal" href="#contractorLostPass">Восстановить пароль</a>
             <br />
         </div>
     </div>
     <br>
-    <div style="margin-left: auto; margin-right: auto; text-align: center; height: 64px; width: 460px;">
+    <div style="margin-left: auto; margin-right: auto; text-align: center; height: 64px; width: 799px;">
         <a class="green goodbutton" id="customerRegister" rel="leanModal" href="#signupCustomer">Зарегистрировать заказчика</a>
         <br>
         <a class="green goodbutton" id="contractorRegister" rel="leanModal" href="#signupContractor">Зарегистрировать подрядчика</a>

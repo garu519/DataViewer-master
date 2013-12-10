@@ -101,8 +101,14 @@ namespace PlanViewer
             NoPlan.Visible = false;
             foreach (Plan item in results)
             {
-                Table.Caption = item.Name;
-                
+                if (item.Name == null)
+                {
+                    Table.Caption = "План";
+                }
+                else
+                {
+                    Table.Caption = item.Name;
+                }
                 TableRow tr = new TableRow();
                 List<TableCell> cells = new List<TableCell>();
                 TableCell c = new TableCell();

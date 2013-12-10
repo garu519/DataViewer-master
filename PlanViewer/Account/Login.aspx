@@ -31,7 +31,7 @@
     </script>
     <script type="text/javascript">
         $(function () {
-            $('a[rel*=leanModal]').leanModal({ top: 200, overlay: 0.4, closeButton: ".modal_close" });
+            $('a[rel*=leanModal]').leanModal({ top: 50, overlay: 0.4, closeButton: ".modal_close" });
         });
     </script>
     <div style="float: left">

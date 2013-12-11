@@ -410,11 +410,12 @@ namespace PlanViewer
             //query.ToArray()[0].Status = 3;
             try
             {
-                String updatePlan = "UPDATE [Plan] SET Status=3 WHERE PlanID=" + planID;
+                String updatePlan = "UPDATE [Plan] SET Status=3 WHERE PlanID=" + int.Parse(DropDownList1.SelectedValue);
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(updatePlan, conn);
                 cmd.ExecuteNonQuery();
                 conn.Close();
+                Alert.Show("Статус плана обновлён.");
             }
             catch { }
             //try
@@ -446,11 +447,12 @@ namespace PlanViewer
             //}
             try
             {
-                String updatePlan = "UPDATE [Plan] SET Status=4 WHERE PlanID=" + planID;
+                String updatePlan = "UPDATE [Plan] SET Status=4 WHERE PlanID=" + int.Parse(DropDownList1.SelectedValue);
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(updatePlan, conn);
                 cmd.ExecuteNonQuery();
                 conn.Close();
+                Alert.Show("Статус плана обновлён.");
             }
             catch { }
 

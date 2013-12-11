@@ -473,7 +473,7 @@ namespace PlanViewer
         {            
             
             //gvbind();
-            string filename = "Report.xlsx";
+            string filename = "Report.xls";
             Response.Clear();
             Response.ClearContent();
             

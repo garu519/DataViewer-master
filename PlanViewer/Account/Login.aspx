@@ -40,6 +40,7 @@
             DisplayRememberMe="false"
             LoginButtonText="Войти как заказчик"
             UserNameLabelText="email"
+            FailureText="Неверный логин или пароль"
             TitleText="Вход для заказчика"
             DestinationPageUrl="~/Default.aspx" OnAuthenticate="Customer_Authenticate">
         </asp:Login>
@@ -53,7 +54,8 @@
             RememberMeSet="false"
             DisplayRememberMe="false"
             LoginButtonText="Войти как подрядчик"
-            UserNameLabelText="email"            
+            UserNameLabelText="email"
+            FailureText="Неверный логин или пароль"
             TitleText="Вход для подрядчика"
             DestinationPageUrl="~/Default.aspx" OnAuthenticate="Contractor_Authenticate">
         </asp:Login>

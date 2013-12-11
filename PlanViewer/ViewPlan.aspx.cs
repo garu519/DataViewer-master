@@ -128,7 +128,7 @@ namespace PlanViewer
 
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            buildPlanTable();
+            //buildPlanTable();
             //GridView1.EditIndex = -1;
             //gvbind();
         }

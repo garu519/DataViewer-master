@@ -177,6 +177,12 @@ namespace PlanViewer
                     Table1.Caption += ", " + "Одобрен"; 
                 }
                 bool gotfacts = false;
+                foreach (TableRow tr in Table1.Rows)
+                {
+                    tr.Cells[6].Visible = true;
+                    tr.Cells[8].Visible = true;
+                    tr.Cells[10].Visible = true;
+                }
                 foreach (Plan item in results)
                 {
                     var fact_query =
@@ -464,7 +470,7 @@ namespace PlanViewer
         {            
             
             //gvbind();
-            string filename = "Report.xls";
+            string filename = "Report.xlsx";
             Response.Clear();
             Response.ClearContent();
             

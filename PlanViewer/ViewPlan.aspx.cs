@@ -74,7 +74,7 @@ namespace PlanViewer
             }
             if (Page.IsPostBack)
             {
-                //buildPlanTable();
+                buildPlanTable();
             }
         }
         [WebMethod(EnableSession = true)]

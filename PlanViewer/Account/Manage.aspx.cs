@@ -37,7 +37,7 @@ namespace PlanViewer.Account
             {
                 if (role.Equals(Global.contractorRole))
                 {
-                    Response.Redirect("../CreatePlan.aspx");
+                    Response.Redirect("../NewPlan.aspx");
                     return;
                 }
                 else 

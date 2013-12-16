@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Web.Security;
 using Microsoft.AspNet.Membership.OpenAuth;
 
 namespace PlanViewer.Account
@@ -22,6 +22,30 @@ namespace PlanViewer.Account
 
         protected void Page_Load()
         {
+            string user;
+            try
+            {
+                user = Membership.GetUser().UserName;
+            }
+            catch (Exception ex)
+            {
+                Alert.Show("Нет прав доступа, пожалуйста зайдите как Подрядчик");
+                Response.Redirect("Account/Login.aspx");
+            }
+            
+            foreach (var role in Roles.GetRolesForUser())
+            {
+                if (role.Equals(Global.contractorRole))
+                {
+                    Response.Redirect("../CreatePlan.aspx");
+                    return;
+                }
+                else 
+                {
+                    Response.Redirect("../ViewPlan.aspx");
+                    return;             
+                }
+            }
             if (!IsPostBack)
             {
                 // Determine the sections to render

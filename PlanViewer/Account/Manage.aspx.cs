@@ -54,10 +54,10 @@ namespace PlanViewer.Account
             if (!IsPostBack)
             {
                 // Determine the sections to render
-                var hasLocalPassword = OpenAuth.HasLocalPassword(User.Identity.Name);                
-                changePassword.Visible = hasLocalPassword;
+                //var hasLocalPassword = OpenAuth.HasLocalPassword(User.Identity.Name);                
+                //changePassword.Visible = hasLocalPassword;
 
-                CanRemoveExternalLogins = hasLocalPassword;
+                //CanRemoveExternalLogins = hasLocalPassword;
 
                 // Render success message
                 var message = Request.QueryString["m"];

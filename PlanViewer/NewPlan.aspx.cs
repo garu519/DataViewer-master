@@ -146,16 +146,16 @@ namespace PlanViewer
             conn.Open();
           //  if (planID == -1) 
           //  planID = factId;
-          SqlCommand cmd = new SqlCommand("update [Plan] set Object='" + factObject.Text
-                + "', WorkType='" + worktype.Text
-                + "', CostName='" + costname.Text
-                + "', UnitName='" + unitname.Text
-                + "', Labor='" + labor.Text
-                + "', Materials='" + materials.Text
-                + "', Mechanisms='" + mechanisms.Text
+          SqlCommand cmd = new SqlCommand("update [Plan] set Object=N'" + factObject.Text
+                + "', WorkType=N'" + worktype.Text
+                + "', CostName=N'" + costname.Text
+                + "', UnitName=N'" + unitname.Text
+                + "', Labor=N'" + labor.Text
+                + "', Materials=N'" + materials.Text
+                + "', Mechanisms=N'" + mechanisms.Text
                 + "', PlanID=" + planID
                 + ", Status=" + 1
-                + ", Name='" + PlanName.Text
+                + ", Name=N'" + PlanName.Text
                 + "' where ID=" + factId, conn);
             cmd.ExecuteNonQuery();
             conn.Close();

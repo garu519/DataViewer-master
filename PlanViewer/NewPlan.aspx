@@ -21,11 +21,12 @@
             <asp:formparameter name="Labor"   />
             <asp:formparameter name="Materials"   />
             <asp:formparameter name="Mechanisms"   />
-            <asp:formparameter name="Name" />
+            <asp:formparameter name="Name"/>
         </insertparameters>
     </asp:SqlDataSource>
-    <asp:Panel runat="server" ID="Panel3">
-        <asp:TextBox runat="server" ID="PlanName" BorderWidth="2px" Text="Введите название плана" Width="317px" OnTextChanged="PlanName_TextChanged"></asp:TextBox>
+    <br />
+    Список заказчиков<asp:Panel runat="server" ID="Panel3">
+        <asp:TextBox runat="server" ID="PlanName" BorderWidth="2px" Text="Введите название плана" Width="317px" OnTextChanged="PlanName_TextChanged" ></asp:TextBox>
             <asp:GridView BackColor="LightBlue" GridLines="Both" BorderWidth="1px" Width="" ID="GridView1" runat="server" AutoGenerateColumns="false" DataKeyNames="ID" OnRowCancelingEdit="GridView1_RowCancelingEdit" OnRowDeleting="GridView1_RowDeleting" OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating" ShowFooter="true" OnRowCommand="GridView1_RowCommand">
         <Columns>
             <asp:TemplateField HeaderText="№ ">
@@ -142,5 +143,7 @@
                 
         </asp:GridView>
         </asp:Panel>
-        <asp:Button ID="Finish" runat="server" OnClick="Finish_Click" Text="Отправить план" Width="429px" />
+        <br />
+    <br />
+        <asp:Button ID="Finish" runat="server" OnClick="Finish_Click" Text="Отправить план" Width="429px" style="margin-right: auto;"/>
 </asp:Content>

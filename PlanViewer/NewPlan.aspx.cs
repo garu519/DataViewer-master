@@ -216,10 +216,10 @@ namespace PlanViewer
                         cmd.ExecuteNonQuery();
                         conn.Close();
                         */
-                        Plan plans = new Plan { Contractor = id, Object = factObject.Text, CostName = costname.Text, WorkType = worktype.Text, UnitName = unitname.Text, Labor = labor.Text, Materials = materials.Text, Mechanisms = mechanisms.Text, Customer = int.Parse(DropDownList1.SelectedValue), Status = 1, PlanID = planID };
+                        planID = planID + 1;
+                        Plan plans = new Plan { Contractor = id, Object = factObject.Text, CostName = costname.Text, WorkType = worktype.Text, UnitName = unitname.Text, Labor = labor.Text, Materials = materials.Text, Mechanisms = mechanisms.Text, Customer = int.Parse(DropDownList1.SelectedValue), Status = 1, PlanID = planID, Name = PlanName.Text };
                         db.Plans.InsertOnSubmit(plans);
                         db.SubmitChanges();
-
                         conn.Open();
                         SqlCommand cmd = new SqlCommand("DELETE [Plan] WHERE PlanID=" + -1, conn);
                         cmd.ExecuteNonQuery();
@@ -227,7 +227,7 @@ namespace PlanViewer
                     }
                     else
                     {
-                        Plan plans = new Plan { Contractor = id, Object=factObject.Text, CostName = costname.Text, WorkType = worktype.Text, UnitName = unitname.Text, Labor = labor.Text, Materials = materials.Text, Mechanisms = mechanisms.Text, Customer = int.Parse(DropDownList1.SelectedValue), Status = 1, PlanID = planID };
+                        Plan plans = new Plan { Contractor = id, Object = factObject.Text, CostName = costname.Text, WorkType = worktype.Text, UnitName = unitname.Text, Labor = labor.Text, Materials = materials.Text, Mechanisms = mechanisms.Text, Customer = int.Parse(DropDownList1.SelectedValue), Status = 1, PlanID = planID, Name = PlanName.Text };
                         db.Plans.InsertOnSubmit(plans);
                         db.SubmitChanges();
                     }
@@ -268,7 +268,9 @@ namespace PlanViewer
 
         protected void PlanName_TextChanged(object sender, EventArgs e)
         {
-            GridView1.Caption = PlanName.Text;
+            GridView1.Caption = "";
+            PlanName.Text = "Введите название плана";
+
         }
     }
 }

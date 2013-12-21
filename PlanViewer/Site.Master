@@ -4,7 +4,7 @@
 <html lang="en">
 <head runat="server">
     <meta charset="utf-8" />
-    <title><%: Page.Title %> - Командный проект. Версия 0.1</title>
+    <title><%: Page.Title %> - Командный проект.</title>
     <asp:PlaceHolder runat="server">     
           <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>  
@@ -39,8 +39,8 @@
     <header>
         <div class="content-wrapper">
             <div class="float-left">
-                <p class="site-title">
-                    <a runat="server" href="~/">TechUP</a>
+                <p class="site-title">                    
+                    <img src="Images/logo.png" width="128"/>
                 </p>
             </div>
             <div class="float-right">
@@ -54,9 +54,9 @@
                         </AnonymousTemplate>
                         <LoggedInTemplate>
                             <p>
-                                Hello, <a runat="server" class="username" href="~/Account/Manage" title="Manage your account">
+                                Здравствуйте, <a runat="server" class="username" href="~/Account/Manage" title="Manage your account">
                                     <asp:LoginName runat="server" CssClass="username" /></a>!
-                                <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" />
+                                <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Выйти" LogoutPageUrl="~/" />
                             </p>
                         </LoggedInTemplate>
                     </asp:LoginView>
@@ -82,7 +82,7 @@
         </section>
     </div>
     <footer>
-        <div class="content-wrapper">
+        <div class="footer-wrapper">
             <div class="float-left">
                 <p>&copy; <%: DateTime.Now.Year %> - TechUP, Москва</p>
             </div>

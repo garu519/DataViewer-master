@@ -140,7 +140,7 @@ namespace PlanViewer
                 c.BackColor = System.Drawing.Color.LightBlue;
                 TextBox l = new TextBox();
                 l.Width = 70;
-                l.BackColor = System.Drawing.Color.LightBlue;
+                //l.BackColor = System.Drawing.Color.LightBlue;
                 if (firstTableBuilding)
                     l.Text = item.Labor;
                 //l.AutoPostBack = true;
@@ -155,7 +155,7 @@ namespace PlanViewer
                 c.BackColor = System.Drawing.Color.LightBlue;
                 l = new TextBox();
                 l.Width = 70;               
-                l.BackColor = System.Drawing.Color.LightBlue;
+                //l.BackColor = System.Drawing.Color.LightBlue;
                 if (firstTableBuilding)
                     l.Text = item.Materials;
                 //l.AutoPostBack = true;
@@ -170,7 +170,7 @@ namespace PlanViewer
                 c.BackColor = System.Drawing.Color.LightBlue;
                 l = new TextBox();
                 l.Width = 70;
-                l.BackColor = System.Drawing.Color.LightBlue;
+                //l.BackColor = System.Drawing.Color.LightBlue;
                 if (firstTableBuilding)
                     l.Text = item.Mechanisms;
                 //l.AutoPostBack = true;

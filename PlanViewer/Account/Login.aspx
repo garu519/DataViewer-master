@@ -41,6 +41,7 @@
                 DisplayRememberMe="false"
                 LoginButtonText="Войти как заказчик"
                 UserNameLabelText="email"
+                PasswordLabelText="Пароль"
                 FailureText="Неверный логин или пароль"
                 TitleText="Вход для заказчика"
                 DestinationPageUrl="~/Default.aspx" OnAuthenticate="Customer_Authenticate">
@@ -56,6 +57,7 @@
                 DisplayRememberMe="false"
                 LoginButtonText="Войти как подрядчик"
                 UserNameLabelText="email"
+                PasswordLabelText="Пароль"
                 FailureText="Неверный логин или пароль"
                 TitleText="Вход для подрядчика"
                 DestinationPageUrl="~/Default.aspx" OnAuthenticate="Contractor_Authenticate">

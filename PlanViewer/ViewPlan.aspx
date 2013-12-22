@@ -43,11 +43,14 @@
         
         
     <asp:Panel runat="server" ID="Panel4">
+        <br />
         <asp:Button runat="server" ID="approve" Text="Одобрить" OnClick="approve_Click" Visible="false"/>
         <asp:Button runat="server" ID="reject" Text="Отклонить" OnClick="reject_Click" Visible="false"/>
         <asp:Button runat="server" ID="download" Text="Скачать отчет" OnClick="download_Click1" />        
     </asp:Panel>
     <asp:Panel runat="server" ID="Panel5" HorizontalAlign="Left">
+        <br />
+        <br />
         <asp:Label ID ="Label3" runat="server" Text = "Отправить письмо заказчику: " Font-Bold="true"/>
         <br />
         <br />
@@ -59,6 +62,6 @@
         <br />
         <asp:TextBox ID="MessageText" runat="server" TextMode="MultiLine" ToolTip="Текст запроса подрядчику" ></asp:TextBox>
         <br />
-        <asp:Button runat="server" ID="sendRequest" Text="Отправить запрос" OnClick="sendRequest_Click" />
+        <asp:Button runat="server" ID="sendRequest" Text="Отправить письмо" OnClick="sendRequest_Click" />
     </asp:Panel>
 </asp:Content>

@@ -168,13 +168,13 @@ namespace PlanViewer
                 Table1.Caption = results[0].Name;
                 if (results[0].Status < 3 || results[0].Status==4)
                 {
-                    Table1.Caption += ", " + "Не одобрен\n";
+                    Table1.Caption += ", " + "Не одобрен\n\n";
                     approve.Visible = true;
                     
                 }
                 else
                 {
-                    Table1.Caption += ", " + "Одобрен\n"; 
+                    Table1.Caption += ", " + "Одобрен\n\n"; 
                 }
                 bool gotfacts = false;
                 foreach (Plan item in results)

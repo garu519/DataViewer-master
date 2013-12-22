@@ -12,7 +12,7 @@
 
     <asp:Panel ID="Panel1" runat="server">
         <div>
-            
+            <asp:Label runat="server" ID="PlanLabel" Text="Выберите план:" Width="400" Visible="false"></asp:Label>
             <asp:DropDownList ID="DropDownList1" runat="server" DataSourceID="SqlDataSource1" DataTextField="res" DataValueField="PlanID" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" AutoPostBack="true" OnDataBound="DropDownList1_DataBound" >
             </asp:DropDownList>
             <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:TeamProjectDBConnectionString1 %>">
@@ -44,10 +44,10 @@
         
     <asp:Panel runat="server" ID="Panel4">
         <asp:Button runat="server" ID="approve" Text="Одобрить" OnClick="approve_Click" Visible="false"/>
-        <asp:Button runat="server" ID="reject" Text="Отклонить" OnClick="reject_Click" Visible="true"/>
+        <asp:Button runat="server" ID="reject" Text="Отклонить" OnClick="reject_Click" Visible="false"/>
         <asp:Button runat="server" ID="download" Text="Скачать отчет" OnClick="download_Click1" />        
     </asp:Panel>
-    <asp:Panel runat="server" ID="Panel5" HorizontalAlign="Center">
+    <asp:Panel runat="server" ID="Panel5" HorizontalAlign="Right">
         <asp:Label ID ="Label1" runat="server" Text = "Тема письма: "/>
         <br />
         <asp:TextBox ID="Subject" runat="server" TextMode="SingleLine" ToolTip="Тема письма" ></asp:TextBox>
@@ -55,6 +55,7 @@
         <asp:Label ID ="Label2" runat="server" Text = "Содержание письма: "/>
         <br />
         <asp:TextBox ID="MessageText" runat="server" TextMode="MultiLine" ToolTip="Текст запроса подрядчику" ></asp:TextBox>
+        <br />
         <asp:Button runat="server" ID="sendRequest" Text="Отправить запрос" OnClick="sendRequest_Click" />
     </asp:Panel>
 </asp:Content>

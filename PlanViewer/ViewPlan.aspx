@@ -47,7 +47,10 @@
         <asp:Button runat="server" ID="reject" Text="Отклонить" OnClick="reject_Click" Visible="false"/>
         <asp:Button runat="server" ID="download" Text="Скачать отчет" OnClick="download_Click1" />        
     </asp:Panel>
-    <asp:Panel runat="server" ID="Panel5" HorizontalAlign="Right">
+    <asp:Panel runat="server" ID="Panel5" HorizontalAlign="Left">
+        <asp:Label ID ="Label3" runat="server" Text = "Отправить письмо заказчику: " Font-Bold="true"/>
+        <br />
+        <br />
         <asp:Label ID ="Label1" runat="server" Text = "Тема письма: "/>
         <br />
         <asp:TextBox ID="Subject" runat="server" TextMode="SingleLine" ToolTip="Тема письма" ></asp:TextBox>

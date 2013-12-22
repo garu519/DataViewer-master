@@ -170,6 +170,7 @@ namespace PlanViewer
                 {
                     Table1.Caption += ", " + "Не одобрен\n\n";
                     approve.Visible = true;
+                    reject.Visible = true;
                     
                 }
                 else

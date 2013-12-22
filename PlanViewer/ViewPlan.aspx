@@ -13,6 +13,7 @@
     <asp:Panel ID="Panel1" runat="server">
         <div>
             <asp:Label runat="server" ID="PlanLabel" Text="Выберите план:" Width="400" Visible="true"></asp:Label>
+            <br />
             <asp:DropDownList ID="DropDownList1" runat="server" DataSourceID="SqlDataSource1" DataTextField="res" DataValueField="PlanID" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" AutoPostBack="true" OnDataBound="DropDownList1_DataBound" >
             </asp:DropDownList>
             <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:TeamProjectDBConnectionString1 %>">

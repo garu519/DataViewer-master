@@ -175,7 +175,9 @@ namespace PlanViewer
                 }
                 else
                 {
-                    Table1.Caption += ", " + "Одобрен\n\n"; 
+                    Table1.Caption += ", " + "Одобрен\n\n";
+                    approve.Visible = false;
+                    reject.Visible = false;
                 }
                 bool gotfacts = false;
                 foreach (Plan item in results)

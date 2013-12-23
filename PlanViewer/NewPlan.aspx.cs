@@ -154,9 +154,8 @@ namespace PlanViewer
                 + "', Materials=N'" + materials.Text
                 + "', Mechanisms=N'" + mechanisms.Text
                 + "', PlanID=" + planID
-                + ", Status=" + 1
-                + ", Name=N'" + PlanName.Text
-                + "' where ID=" + factId, conn);
+                + ", Status=" + 0
+                + " where ID=" + factId, conn);
             cmd.ExecuteNonQuery();
             conn.Close();
            
@@ -217,7 +216,7 @@ namespace PlanViewer
                         conn.Close();
                         */
                         planID = planID + 1;
-                        Plan plans = new Plan { Contractor = id, Object = factObject.Text, CostName = costname.Text, WorkType = worktype.Text, UnitName = unitname.Text, Labor = labor.Text, Materials = materials.Text, Mechanisms = mechanisms.Text, Customer = int.Parse(DropDownList1.SelectedValue), Status = 1, PlanID = planID, Name = PlanName.Text };
+                        Plan plans = new Plan { Contractor = id, Object = factObject.Text, CostName = costname.Text, WorkType = worktype.Text, UnitName = unitname.Text, Labor = labor.Text, Materials = materials.Text, Mechanisms = mechanisms.Text, Customer = int.Parse(DropDownList1.SelectedValue), Status = 0, PlanID = planID};
                         db.Plans.InsertOnSubmit(plans);
                         db.SubmitChanges();
                         conn.Open();
@@ -227,7 +226,7 @@ namespace PlanViewer
                     }
                     else
                     {
-                        Plan plans = new Plan { Contractor = id, Object = factObject.Text, CostName = costname.Text, WorkType = worktype.Text, UnitName = unitname.Text, Labor = labor.Text, Materials = materials.Text, Mechanisms = mechanisms.Text, Customer = int.Parse(DropDownList1.SelectedValue), Status = 1, PlanID = planID, Name = PlanName.Text };
+                        Plan plans = new Plan { Contractor = id, Object = factObject.Text, CostName = costname.Text, WorkType = worktype.Text, UnitName = unitname.Text, Labor = labor.Text, Materials = materials.Text, Mechanisms = mechanisms.Text, Customer = int.Parse(DropDownList1.SelectedValue), Status = 0, PlanID = planID};
                         db.Plans.InsertOnSubmit(plans);
                         db.SubmitChanges();
                     }
@@ -263,13 +262,20 @@ namespace PlanViewer
             GridView1.Rows[0].Cells.Add(new TableCell());
             GridView1.Rows[0].Cells[0].ColumnSpan = columncount;
             GridView1.Rows[0].Cells[0].Text = "Для создания плана напишите его название и добавьте строки в таблицу";
+
+            conn.Open();
+            SqlCommand cmd2 = new SqlCommand("update [Plan] set Status=1"
+                  + ", Name=N'" + PlanName.Text
+                  + "' where PlanID=" + planID, conn);
+            cmd2.ExecuteNonQuery();
+            conn.Close();
+
             planID = -1;
         }
 
         protected void PlanName_TextChanged(object sender, EventArgs e)
         {
-            GridView1.Caption = "";
-            PlanName.Text = "Введите название плана";
+
 
         }
     }

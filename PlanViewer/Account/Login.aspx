@@ -34,43 +34,54 @@
             $('a[rel*=leanModal]').leanModal({ top: 50, overlay: 0.4, closeButton: ".modal_close" });
         });
     </script>
+    <style type="text/css">
+        Panel.register_float
+        {
+            bottom:inherit 0px;
+        }      
+    </style>
     <div style="align-content: center">
-        <div style="float: left">
-            <asp:Login ID="Customer" runat="server"
-                RememberMeSet="false"
-                DisplayRememberMe="false"
-                LoginButtonText="Войти как заказчик"
-                UserNameLabelText="email"
-                PasswordLabelText="Пароль"
-                FailureText="Неверный логин или пароль"
-                TitleText="Вход для заказчика"
-                DestinationPageUrl="~/Default.aspx" OnAuthenticate="Customer_Authenticate">
-            </asp:Login>
-            <div>
-                <a class="green goodbutton" id="A1" rel="leanModal" href="#customerLostPass">Восстановить пароль</a>
+        <asp:Panel runat="server" >
+            <div style="float: left">
+                <asp:Login ID="Customer" runat="server"
+                    RememberMeSet="false"
+                    DisplayRememberMe="false"
+                    LoginButtonText="Войти как заказчик"
+                    UserNameLabelText="email"
+                    PasswordLabelText="Пароль"
+                    FailureText="Неверный логин или пароль"
+                    TitleText="Вход для заказчика"
+                    DestinationPageUrl="~/Default.aspx" OnAuthenticate="Customer_Authenticate">
+                </asp:Login>
+                <div>
+                    <a class="green goodbutton" id="A1" rel="leanModal" href="#customerLostPass">Восстановить пароль</a>
+                    <br />
+                </div>
+            </div>
+            <div style="float: right">
+                <asp:Login ID="Contractor" runat="server"
+                    RememberMeSet="false"
+                    DisplayRememberMe="false"
+                    LoginButtonText="Войти как подрядчик"
+                    UserNameLabelText="email"
+                    PasswordLabelText="Пароль"
+                    FailureText="Неверный логин или пароль"
+                    TitleText="Вход для подрядчика"
+                    EnableViewState="false"
+                    DestinationPageUrl="~/Default.aspx" OnAuthenticate="Contractor_Authenticate">
+                </asp:Login>
+                <a class="right" style="text-align: right; float: right" id="A2" rel="leanModal" href="#contractorLostPass">Восстановить пароль</a>
                 <br />
             </div>
-        </div>
-        <div style="float: right">
-            <asp:Login ID="Contractor" runat="server"
-                RememberMeSet="false"
-                DisplayRememberMe="false"
-                LoginButtonText="Войти как подрядчик"
-                UserNameLabelText="email"
-                PasswordLabelText="Пароль"
-                FailureText="Неверный логин или пароль"
-                TitleText="Вход для подрядчика"
-                DestinationPageUrl="~/Default.aspx" OnAuthenticate="Contractor_Authenticate">
-            </asp:Login>
-            <a class="right" style="text-align: right; float: right" id="A2" rel="leanModal" href="#contractorLostPass">Восстановить пароль</a>
-            <br />
-        </div>
+        </asp:Panel>
     </div>
     <br>
     <div style="margin-left: auto; margin-right: auto; text-align: center;">
-        <a class="green goodbutton" id="customerRegister" rel="leanModal" href="#signupCustomer">Зарегистрировать заказчика</a>
-        <br>
-        <a class="green goodbutton" id="contractorRegister" rel="leanModal" href="#signupContractor">Зарегистрировать подрядчика</a>
+        <asp:Panel runat="server" CssClass="register_float">
+            <a class="green goodbutton" id="customerRegister" rel="leanModal" href="#signupCustomer">Зарегистрировать заказчика</a>
+            <br>
+            <a class="green goodbutton" id="contractorRegister" rel="leanModal" href="#signupContractor">Зарегистрировать подрядчика</a>
+        </asp:Panel>
         <div id="signupCustomer" class="signup" style="display: none; position: fixed; opacity: 1; z-index: 11000; left: 50%; margin-left: -202px; top: 50px;">
             <div class="signup-ct">
                 <div class="signup-header">

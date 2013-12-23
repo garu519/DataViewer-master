@@ -71,10 +71,14 @@ namespace PlanViewer
                 {
                     ///current current user has been already registered as customer
                 }
+                e.Authenticated = true;
                 Response.Redirect("../ViewPlan.aspx");
             }
             else
             {
+                e.Authenticated = false;
+                Customer.FailureText = "";
+                Alert.Show("Неверный email или пароль!");
                 Session["UserAuthentication"] = "";
             }
             con.Close();
@@ -121,12 +125,16 @@ namespace PlanViewer
                 {
                     ///current current user has been already registered as contractor
                 }
+                e.Authenticated = true;
                 Response.Redirect("../NewPlan.aspx");
             }
             else
             {
+                e.Authenticated = false;
+                Customer.FailureText = "";
+                Alert.Show("Неверный email или пароль!");
                 Session["UserAuthentication"] = "";
-                Alert.Show("Неверное имя пользователя или пароль!");
+                Alert.Show("Неверный email или пароль!");
             }
             con.Close();
         }

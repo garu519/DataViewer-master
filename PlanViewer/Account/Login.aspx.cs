@@ -131,7 +131,7 @@ namespace PlanViewer
             else
             {
                 e.Authenticated = false;
-                Customer.FailureText = "";
+                Contractor.FailureText = "";
                 Alert.Show("Неверный email или пароль!");
                 Session["UserAuthentication"] = "";
                 Alert.Show("Неверный email или пароль!");

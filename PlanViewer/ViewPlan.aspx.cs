@@ -428,7 +428,6 @@ namespace PlanViewer
                 cmd.ExecuteNonQuery();
                 conn.Close();
                 Alert.Show("Статус плана обновлён.");
-                buildPlanTable();
                 approve.Visible = false;
             }
             catch { }

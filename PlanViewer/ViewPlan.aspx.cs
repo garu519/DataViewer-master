@@ -143,7 +143,7 @@ namespace PlanViewer
             {
                 results = query.ToArray<Plan>();
                 Table1.Caption = results[0].Name;
-                if ((results[0].Status < 3 || results[0].Status==4 )&& bb == false)
+                if (results[0].Status < 3 || results[0].Status==4 || bb)
                 {
                     Table1.Caption += ", " + "Не одобрен\n\n";
                     approve.Visible = true;
@@ -391,7 +391,7 @@ namespace PlanViewer
 
         protected void approve_Click(object sender, EventArgs e)
         {
-            //var db = new DBClassesDataContext();
+            var db = new DBClassesDataContext();
             //var query =
             //    from plan in db.Plans
             //    where plan.PlanID == int.Parse(DropDownList1.SelectedValue)
@@ -404,9 +404,21 @@ namespace PlanViewer
                 SqlCommand cmd = new SqlCommand(updatePlan, conn);
                 cmd.ExecuteNonQuery();
                 conn.Close();
+                bb = true;
+                var query =
+                from plan in db.Plans
+                where plan.PlanID == int.Parse(DropDownList1.SelectedValue)
+                select plan;
+                try
+                {
+                    Plan[] results = null;
+                    results = query.ToArray<Plan>();
+                    Table1.Caption = results[0].Name + ", Одобрен";
+                }
+                catch { }
                 Alert.Show("Статус плана обновлён.");
                 approve.Visible = false;
-                bb = true;
+                reject.Visible = false;
             }
             catch { }
             //try
@@ -422,7 +434,7 @@ namespace PlanViewer
 
         protected void reject_Click(object sender, EventArgs e)
         {
-            //var db = new DBClassesDataContext();
+            var db = new DBClassesDataContext();
             //var query =
             //    from plan in db.Plans
             //    where plan.PlanID == int.Parse(DropDownList1.SelectedValue)
@@ -443,6 +455,17 @@ namespace PlanViewer
                 SqlCommand cmd = new SqlCommand(updatePlan, conn);
                 cmd.ExecuteNonQuery();
                 conn.Close();
+                try
+                {
+                    var query =
+                        from plan in db.Plans
+                        where plan.PlanID == int.Parse(DropDownList1.SelectedValue)
+                        select plan;
+                    Plan[] results = null;
+                    results = query.ToArray<Plan>();
+                    Table1.Caption = results[0].Name + ", Одобрен";
+                }
+                catch { }
                 Alert.Show("Статус плана обновлён.");
                 bb = false;
                 approve.Visible = true;

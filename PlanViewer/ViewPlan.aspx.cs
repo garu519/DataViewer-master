@@ -25,6 +25,8 @@ namespace PlanViewer
         int planID;
         private static string connectionStr = WebConfigurationManager.ConnectionStrings["TeamProjectDBConnectionString1"].ConnectionString;
         private SqlConnection conn = new SqlConnection(connectionStr);
+        bool bb = false;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -61,6 +63,7 @@ namespace PlanViewer
                 //providerstring = "SELECT Contractor.Name, [Plan].Name FROM [Plan] INNER JOIN [Customer] ON [Customer].[ID] = [Plan].[Customer] INNER JOIN [Contractor] ON [Plan].Customer = Customer.ID where Contractor.ID=10 GROUP BY [Plan].PlanID , Customer.Name";
                 SqlDataSource1.SelectCommand = string.Format(providerstring);
                 DataBind();
+                bb = false;
                 var db1 = new DBClassesDataContext();
                 var query1 = from plan in db.Plans
                              where plan.Customer == id
@@ -96,54 +99,9 @@ namespace PlanViewer
                 buildPlanTable();
             }
         }
-        [WebMethod(EnableSession = true)]
-          public static object StudentList(int jtStartIndex, int jtPageSize, string jtSorting)
-          {
-         EntityPlanManagerRepository.EF_PlanRepository rep = new EntityPlanManagerRepository.EF_PlanRepository();
-              try
-              {
-                  //Get data from database
-                  int planCount = rep.GetAllPlans().ToArray().Length;
-                  List<Plan> plans = rep.GetAllPlans();
 
-                  //Return result to jTable
-                  return new { Result = "OK", Records = plans, TotalRecordCount = planCount };
-              }
-              catch (Exception ex)
-              {
-                  return new { Result = "ERROR", Message = ex.Message };
-              }
-          }
+
         
-        [WebMethod(EnableSession = true)]
-        public static object DeletePlan(int PlanId)
-        {
-            EntityPlanManagerRepository.EF_PlanRepository rep = new EntityPlanManagerRepository.EF_PlanRepository();
-            try
-            {
-                rep.DeletePlan(PlanId);
-                return new { Result = "OK" };
-            }
-            catch (Exception ex)
-            {
-                return new { Result = "ERROR", Message = ex.Message };
-            }
-        }
-
-        [WebMethod(EnableSession = true)]
-        public static object CreatePlan(Plan record)
-        {
-            EntityPlanManagerRepository.EF_PlanRepository rep = new EntityPlanManagerRepository.EF_PlanRepository();
-            try
-            {
-                rep.CreateNewPlan(record);
-                return new { Result = "OK", Record = record };
-            }
-            catch (Exception ex)
-            {
-                return new { Result = "ERROR", Message = ex.Message };
-            }
-        }
 
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -185,7 +143,7 @@ namespace PlanViewer
             {
                 results = query.ToArray<Plan>();
                 Table1.Caption = results[0].Name;
-                if (results[0].Status < 3 || results[0].Status==4)
+                if ((results[0].Status < 3 || results[0].Status==4 )&& bb == false)
                 {
                     Table1.Caption += ", " + "Не одобрен\n\n";
                     approve.Visible = true;
@@ -448,6 +406,7 @@ namespace PlanViewer
                 conn.Close();
                 Alert.Show("Статус плана обновлён.");
                 approve.Visible = false;
+                bb = true;
             }
             catch { }
             //try
@@ -485,8 +444,9 @@ namespace PlanViewer
                 cmd.ExecuteNonQuery();
                 conn.Close();
                 Alert.Show("Статус плана обновлён.");
-                buildPlanTable();
+                bb = false;
                 approve.Visible = true;
+                
             }
             catch { }
 

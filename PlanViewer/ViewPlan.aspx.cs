@@ -68,6 +68,7 @@ namespace PlanViewer
                 DropDownList1.Visible = true;
                 download.Visible = true;
                 Panel5.Visible = true;
+                PlanLabel.Text = "Выберите план:";
                 try
                 {
                     Plan cs = query1.First();
@@ -77,6 +78,7 @@ namespace PlanViewer
                     DropDownList1.Visible = false;
                     download.Visible = false;
                     Panel5.Visible = false;
+                    PlanLabel.Text = "Нет данных";
                 }
             }
             //Session["UserID"] = id;   

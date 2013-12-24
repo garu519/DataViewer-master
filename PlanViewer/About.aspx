@@ -2,7 +2,7 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <hgroup class="title">
-        <h1>Команда TechUP <%: Title %></h1>
+        <h1>Команда TechUP</h1>
     </hgroup>
 
     <article>
@@ -10,16 +10,18 @@
             Национальный Исследовательский Университет - Высшая Школа Экономики</p>
 
         <p>        
-            Стафеев Артём     stafeevartem@gmail.com
+            Стафеев Артём - stafeevartem@gmail.com
+        </p>
+        <p>        
+            Сотов Александр - stvsasha@rambler.ru
+        </p>
+        <p>        
+            Захаров Егор - garu519@gmail.com  
+            </p>
+        <p>        
+            Лапидус Егор - evlapidus@gmail.com
 
-        </p>
-        <p>        
-            Сотов Александр   stvsasha@rambler.ru
-        </p>
-        <p>        
-            Захаров Егор</p>  zaharov@gmail.com
-        <p>        
-            Лапидус Егор</p>  lapidus@gmail.com
+            </p>
         <p>        
             &nbsp;</p>
     </article>

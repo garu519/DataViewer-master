@@ -67,7 +67,7 @@ namespace PlanViewer
                              select plan;
                 DropDownList1.Visible = true;
                 download.Visible = true;
-
+                Panel5.Visible = true;
                 try
                 {
                     Plan cs = query1.First();
@@ -76,6 +76,7 @@ namespace PlanViewer
                 {
                     DropDownList1.Visible = false;
                     download.Visible = false;
+                    Panel5.Visible = false;
                 }
             }
             //Session["UserID"] = id;   

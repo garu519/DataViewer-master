@@ -1,17 +1,12 @@
-﻿<%@ Page Title="Статистика" Language="C#" Debug="true" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Stat.aspx.cs" Inherits="PlanViewer._Default" %>
+﻿<%@ Page Title="Статистика" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Stat.aspx.cs" Inherits="PlanViewer._Default" %>
 
 <%@ Register assembly="System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" namespace="System.Web.UI.DataVisualization.Charting" tagprefix="asp" %>
 
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
-        
-    <section class="featured">
-        
-    </section>
-</asp:Content>
-<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <section style ="vertical-align: middle" >
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:TeamProjectDBConnectionString1 %>">
+        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:TeamProjectDBConnectionString1 %>"   
+   >
         </asp:SqlDataSource>
+    <section class="featured">
         <div class="content-wrapper">
             <hgroup class="title">
                 <h2>Отображение статистики по разнице плановых и фактических затрат на материалы</h2>
@@ -25,7 +20,14 @@
                     <asp:ChartArea Name="ChartArea1">
                     </asp:ChartArea>
                 </chartareas>
-            </asp:Chart>                
+            </asp:Chart>
+        
+        
         </div>
+    </section>
+</asp:Content>
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+    <section style ="vertical-align: middle" >
+
     </section>
 </asp:Content>

@@ -61,6 +61,22 @@ namespace PlanViewer
                 //providerstring = "SELECT Contractor.Name, [Plan].Name FROM [Plan] INNER JOIN [Customer] ON [Customer].[ID] = [Plan].[Customer] INNER JOIN [Contractor] ON [Plan].Customer = Customer.ID where Contractor.ID=10 GROUP BY [Plan].PlanID , Customer.Name";
                 SqlDataSource1.SelectCommand = string.Format(providerstring);
                 DataBind();
+                var db1 = new DBClassesDataContext();
+                var query1 = from plan in db.Plans
+                             where plan.Customer == id
+                             select plan;
+                DropDownList1.Visible = true;
+                download.Visible = true;
+
+                try
+                {
+                    Plan cs = query1.First();
+                }
+                catch
+                {
+                    DropDownList1.Visible = false;
+                    download.Visible = false;
+                }
             }
             //Session["UserID"] = id;   
             //DropDownList1.DataBind();

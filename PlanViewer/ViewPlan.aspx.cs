@@ -25,7 +25,6 @@ namespace PlanViewer
         int planID;
         private static string connectionStr = WebConfigurationManager.ConnectionStrings["TeamProjectDBConnectionString1"].ConnectionString;
         private SqlConnection conn = new SqlConnection(connectionStr);
-        bool bb = false;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -63,7 +62,6 @@ namespace PlanViewer
                 //providerstring = "SELECT Contractor.Name, [Plan].Name FROM [Plan] INNER JOIN [Customer] ON [Customer].[ID] = [Plan].[Customer] INNER JOIN [Contractor] ON [Plan].Customer = Customer.ID where Contractor.ID=10 GROUP BY [Plan].PlanID , Customer.Name";
                 SqlDataSource1.SelectCommand = string.Format(providerstring);
                 DataBind();
-                bb = false;
                 var db1 = new DBClassesDataContext();
                 var query1 = from plan in db.Plans
                              where plan.Customer == id
@@ -143,7 +141,7 @@ namespace PlanViewer
             {
                 results = query.ToArray<Plan>();
                 Table1.Caption = results[0].Name;
-                if (results[0].Status < 3 || results[0].Status==4 || bb)
+                if (results[0].Status < 3 || results[0].Status==4)
                 {
                     Table1.Caption += ", " + "Не одобрен\n\n";
                     approve.Visible = true;
@@ -404,7 +402,6 @@ namespace PlanViewer
                 SqlCommand cmd = new SqlCommand(updatePlan, conn);
                 cmd.ExecuteNonQuery();
                 conn.Close();
-                bb = true;
                 var query =
                 from plan in db.Plans
                 where plan.PlanID == int.Parse(DropDownList1.SelectedValue)
@@ -467,7 +464,6 @@ namespace PlanViewer
                 }
                 catch { }
                 Alert.Show("Статус плана обновлён.");
-                bb = false;
                 approve.Visible = true;
                 
             }
